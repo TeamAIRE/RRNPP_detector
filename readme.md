@@ -101,12 +101,12 @@ python rrnpp_detector.py --faa ~/bacillus_subtilis.faa --ft ~/bacillus_subtilis_
 
 ## 4. Practical example of analysis
 
-In this example, we will propose to use ```RRNPP_detector``` to predict RRNPP-type quorum sensing systems in all complete genomes of Firmicutes available on the NCBI.
+In this example, we will propose to use ```RRNPP_detector``` to predict RRNPP-type quorum sensing systems in all genomes of Viruses available on the NCBI.
 
 To this end, download the protein sequences and the annotated features of these genomes from the NCBI assembly database: https://www.ncbi.nlm.nih.gov/assembly/. Once on the web page, enter the following query search:
 
 ```
-Firmicutes[ORGN] AND "Latest GenBank"[Filter] AND "Complete Genome"[Filter]
+Viruses[ORGN] AND "Latest GenBank"[Filter]
 ```
 
 Then, click the button "Download Assemblies" and download the two following files:
@@ -117,26 +117,26 @@ Then, click the button "Download Assemblies" and download the two following file
 Now, move these two archives in a dedicated directory
 
 ```bash
-mkdir ~/complete_genomes_of_firmicutes
-mv ~/Downloads/genome_assemblies_prot_fasta.tar ~/complete_genomes_of_firmicutes
-mv ~/Download/genome_assemblies_features.tar ~/complete_genomes_of_firmicutes
+mkdir ~/genomes_of_viruses
+mv ~/Downloads/genome_assemblies_prot_fasta.tar ~/genomes_of_viruses
+mv ~/Download/genome_assemblies_features.tar ~/genomes_of_viruses
 ```
 
-Extract the files from these two archives and concatenate all protein fastas in one ```faa``` and all feature tables in one ```feature table```
+Extract the files from these two archives and concatenate all protein fastas in one ```faa``` and all feature tables in one ```feature_table```
 
 ```bash
-cd ~/complete_genomes_of_firmicutes
+cd ~/genomes_of_viruses
 for FILE in *.tar; do tar -xvf "$FILE"; done
 cd ncbi-genomes*
 for FILE in *.gz; do gzip -d "$FILE"; done
-for FILE in *_feature_table.txt; do cat "$FILE" >> ../firmicutes_feature_table.txt; done
-for FILE in *_protein.faa; do cat "$FILE" >> ../firmicutes_protein.faa; done
+for FILE in *_feature_table.txt; do cat "$FILE" >> ../viruses_feature_table.txt; done
+for FILE in *_protein.faa; do cat "$FILE" >> ../viruses_protein.faa; done
 ```
 
 All that remains to do is to execute ```RRNPP_detector``` against this dataset. For instance:
 
 ```bash
 cd ~/Programs/rrnpp_detector
-python rrnpp_detector.py --faa ~/complete_genomes_of_firmicutes/firmicutes_protein.faa --ft ~/complete_genomes_of_firmicutes/firmicutes_feature_table.txt -o ~/complete_genomes_of_firmicutes --fast --cpu 20
+python rrnpp_detector.py --faa ~/genomes_of_viruses/viruses_protein.faa --ft ~/genomes_of_viruses/viruses_feature_table.txt -o ~/genomes_of_viruses --fast --cpu 20
 ```
 
