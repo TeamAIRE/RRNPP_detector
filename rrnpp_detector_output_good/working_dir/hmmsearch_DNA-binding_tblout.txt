@@ -1,0 +1,13 @@
+#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+#
+# Program:         hmmsearch
+# Version:         3.2.1 (June 2018)
+# Pipeline mode:   SEARCH
+# Query file:      /home/charles/clones/rrnpp_detector/HMMs/DNA_binding_motifs.hmm
+# Target file:     /home/charles/clones/rrnpp_detector/rrnpp_detector_output/working_dir/step2_receptors.faa
+# Option settings: hmmsearch -o /home/charles/clones/rrnpp_detector/rrnpp_detector_output/working_dir/hmmsearch_DNA-binding_stdout.txt --tblout /home/charles/clones/rrnpp_detector/rrnpp_detector_output/working_dir/hmmsearch_DNA-binding_tblout.txt --noali --cpu 1 /home/charles/clones/rrnpp_detector/HMMs/DNA_binding_motifs.hmm /home/charles/clones/rrnpp_detector/rrnpp_detector_output/working_dir/step2_receptors.faa 
+# Current dir:     /home/charles/clones/rrnpp_detector
+# Date:            Sat Jun 19 12:23:25 2021
+# [ok]

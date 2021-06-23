@@ -1,0 +1,12 @@
+species	genome_id	genetic element	receptor	protein_id	r_locus_tag	cognate_propeptide	p_NCBI_protein_id	p_locus_tag	reference	pubmed_id
+Bacillus subtilis	NCBI: NP_389125.1	chromosome	RapA	NCBI: NP_389125.1	BSU_12430	PhrA	NCBI: NP_389126.1	BSU_12440	Neiditch et al. 2017	PMID: 28876981
+Streptococcus pyogenes	NCBI: NZ_CP010450.1	chromosome	Rgg2	NCBI: WP_002990747.1	SD90_RS02145	Shp2	NCBI: WP_002990747.1	SD90_RS09265	Neiditch et al. 2017	PMID: 28876981
+Bacillus thuringensis	NCBI: NZ_CM000747.1	chromosome	NprR	NCBI: WP_001187960.1	BTHUR0002_RS02765	NprX	NCBI: WP_000738910.1	BTHUR0002_RS32155	Neiditch et al. 2017	PMID: 28876981
+Bacillus cereus	NCBI: NZ_CP034551.1	chromosome	PlcR	NCBI: WP_000542912.1	EJ379_RS27345	PapR	NCBI: WP_000734730.1	EJ379_RS27340	Neiditch et al. 2017	PMID: 28876981
+Enterococcus faecalis	NCBI: AY855841.2	plasmid	PrgX	NCBI: AAA65845.1	prgX	PrgQ	NCBI: AAA65846.1	prgQ	Neiditch et al. 2017	PMID: 28876981
+Enterococcus faecalis	NCBI: D78016.1	plasmid	TraA	NCBI: BAA11197.1	traA	IPD1	NCBI: BAA11198.1	iPD1	Neiditch et al. 2017	PMID: 28876981
+Bacillus phage phi3T	NCBI: KY030782.1	bacteriophage	AimR	NCBI: APD21232.1	phi3T_89	AimP	NCBI: APD21233.1	phi3T_90	Sorek et al. 2017	PMID: 28099413
+Bacillus phage Waukesha	NCBI: KJ920400.1	bacteriophage	AimR_like	NCBI: AID50226.1	Waukesha92_37	AimP_like	NCBI: AID50225.1	Waukesha92_36	Stokar-Avihail et al. 2019	PMID: 31071296
+Paenibacillus polymyxa	IMG: 23684	chromosome	AloR13	IMG: 2547357582	PPTDRAFT_04976	AloP13			Voichnek et al. 2020	PMID: 32764104
+Clostridium acetobutylicum	NCBI: AE001437.1	chromosome	QsrB	NCBI: AAK78305.1	CA_C0324	QspB			Kotte et al. 2020	PMID: 32375981
+Clostridium saccharoperbutylacetonicum	NCBI: CP004121.1	chromosome	QssR5	NCBI: AGF59421.1	Cspa_c56960	QssP5	NCBI: AGF59420.1	Cspa_c56950	Feng et al. 2020	PMID: 32411297
