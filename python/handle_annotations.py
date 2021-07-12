@@ -110,7 +110,7 @@ def gff_to_dict(gff):
             temp_id = orf_df['id']
         else:
             sys.exit('Neither the tag \'protein_id\' nor \'ID\' are present in the column \'attributes\' of the input gff')
-        orf_df['protein_id'] = orf_df['seq_id'] + temp_id.apply(lambda x: '_' + x.split('_')[1])  
+        orf_df['protein_id'] = orf_df['genomic_accession'] + temp_id.apply(lambda x: '_' + x.split('_')[1])  
     # drop rows where protein_id is null (usually correspond to pseudogenes)
     orf_df = orf_df.dropna(subset=['protein_id'])
     # make sure table is sorted

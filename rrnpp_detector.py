@@ -242,10 +242,9 @@ def __main__():
         print('-------------------------------------')
         print('* Filtering potential propeptides not predicted to be secreted via the SP(Sec/SPI) mode ...')
         conservative_summary_df = exploratory_summary_df.loc[(exploratory_summary_df['Prediction'] == 'SP(Sec/SPI)') & (exploratory_summary_df['intergenic_distance'] <= max_intergenic_distance)]
-        conservative_propeptides_ids = conservative_summary_df['propeptide_id'].tolist()
+        conservative_propeptides_ids = conservative_summary_df['propeptide_id'].unique().tolist()
+        conservative_receptors_ids = conservative_summary_df['receptor_id'].unique().tolist()
         if conservative_propeptides_ids:
-            # Retain only the receptors that are adjacent to SP(Sec/SPI)-secreted propeptides
-            conservative_propeptides_ids, conservative_receptors_ids = handle_fasta.filter_by_adjacency(conservative_propeptides_ids, receptors_ids, protein_dict, position_dict)
             print('  %d potential propeptides at this stage of the analysis' % len(conservative_propeptides_ids))
             print('  %d potential receptors at this stage of the analysis' % len(conservative_receptors_ids))            
             print('-------------------------------------')
