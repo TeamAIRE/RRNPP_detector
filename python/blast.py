@@ -33,7 +33,7 @@ def blastp(target_faa, out_dir, cpu, rrnpp_detector_dir, blastp_min_pident, blas
     query_faa = os.path.join(rrnpp_detector_dir, 'reference_receptors', 'reference_receptors.faa')
     blastp_results = os.path.join(out_dir, 'reference_receptors_vs_candidate_receptors_blastp_out.tsv')
     blastp_args = ['blastp', '-query', query_faa, '-db', database, '-out', blastp_results, '-num_threads', cpu, 
-                   '-max_target_seqs', 1000000, '-outfmt', '6 qseqid sseqid qlen slen pident evalue bitscore qstart qend sstart send']
+                   '-max_target_seqs', '1000000', '-outfmt', '6 qseqid sseqid qlen slen pident evalue bitscore qstart qend sstart send']
     subprocess.run(blastp_args, check = True)
 
     # clean blast
