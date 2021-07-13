@@ -139,6 +139,6 @@ All that remains to do is to execute ```RRNPP_detector``` against this dataset. 
 
 ```bash
 cd ~/Programs/rrnpp_detector
-python rrnpp_detector.py --faa ~/genomes_of_viruses/viruses_protein.faa --ft ~/genomes_of_viruses/viruses_feature_table.txt -o ~/genomes_of_viruses --fast --cpu 20
+python rrnpp_detector.py --faa ~/genomes_of_viruses/viruses_protein.faa --ft ~/genomes_of_viruses/viruses_feature_table.txt -o ~/genomes_of_viruses --cpu 20
 ```
 
