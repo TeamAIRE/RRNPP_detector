@@ -84,7 +84,7 @@ optional arguments:
 
 ### Option 1: Provide one or multiple genome(s)
 
-Ìf you provide one or multiple genome(s) (stored in one ```fna```), ```RRNPP_detector``` will run ```prodigal``` to predict the ORFs of each genome and produce an annotation file (```gff3```) and a fasta of the predicted protein sequences (```faa```)
+If you provide one or multiple genome(s) (stored in one ```fna```), ```RRNPP_detector``` will run ```prodigal``` to predict the ORFs of each genome and produce an annotation file (```gff3```) and a fasta of the predicted protein sequences (```faa```)
 
 ```bash
 python rrnpp_detector.py --fna ~/bacillus_subtilis.fna
@@ -92,7 +92,7 @@ python rrnpp_detector.py --fna ~/bacillus_subtilis.fna
 
 ### Option 2: Provide all proteins from one or multiple genome(s) + the annotations of the genome(s)
 
-If you provide all proteins predicted from one or multiple genome(s) (stored in one ```faa```) and the annotations of the genomes (concatenated in one ```gff3``` or one NCBI_assembly ```feature_table```), ```RRNPP_detector``` will integrate the pre-computed annotations. Option 2 has the advantage to use the reference names/ids of the annotated proteins of the target genome(s) along the analysis. 
+If you provide all proteins predicted from one or multiple genome(s) (stored in one ```faa```) and the annotations of the genomes (concatenated in one ```gff3``` or one NCBI_assembly ```feature_table```), ```RRNPP_detector``` will integrate the pre-computed annotations. Option 2 has the advantage has the advantage to keep reference ids of proteins along the analysis. 
 
 ```bash
 # with a gff
@@ -105,7 +105,7 @@ python rrnpp_detector.py --faa ~/bacillus_subtilis.faa --ft ~/bacillus_subtilis_
 
 In this example, we will propose to use ```RRNPP_detector``` against all genomes of Viruses available on the NCBI.
 
-To this end, we will download the protein sequences and the annotated features of these genomes from the NCBI assembly database: https://www.ncbi.nlm.nih.gov/assembly/. Once on the web page, enter the following query search:
+To this end, we will download the protein sequences and the annotated features of these genomes from the NCBI assembly database: https://www.ncbi.nlm.nih.gov/assembly/. Once on the web page, we will enter the following query search:
 
 ```
 Viruses[ORGN] AND "Latest GenBank"[Filter]
