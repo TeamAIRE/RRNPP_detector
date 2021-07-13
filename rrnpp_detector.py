@@ -22,7 +22,7 @@ def __main__():
     parser.add_argument('--gff', dest='gff', type=str, help='path to the annotations of the target genome(s) in gff')
     parser.add_argument('--ft', dest='feature_tbl', type=str, help='path to the annotations of the target genome(s) in the NCBI_assembly feature_table format')
     parser.add_argument('--cpu', dest='cpu', type=str, default='1', help='number of cpu to use (default is 1)')
-    parser.add_argument('--fast', action='store_true', help='maximize speed at the expense of RAM (will process all target genomes in a single run)')
+    parser.add_argument('--preserve_ram', action='store_true', help='minimize RAM usage at the expense of speed (will process target genomes one by one instead of all together)')
     args = parser.parse_args()    
     rrnpp_detector_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
     current_dir = os.path.abspath(os.getcwd())      
@@ -85,15 +85,16 @@ def __main__():
         sys.exit('  End of execution: no proteins passed the filter')
     print('  Filter done!')
     
-    if args.fast:
-        max_iterations = 1
-    else:
+    if args.preserve_ram:
         # Split gff or feature table based on nucleotide sequence id (different genomes, chromosomes, plasmids etc...)
         print('-------------------------------------')
         print('* Split %s into as many files as there are target genetic elements (genomes, chromosomes, plasmids ...)' % annotation_format)
         list_seq_ids = handle_annotations.split_annotation_file(annotation_file, annotation_format, working_dir)
         print(' %d genetic element(s) identified in the %s' % (len(list_seq_ids), annotation_format))
-        max_iterations = len(list_seq_ids)   
+        max_iterations = len(list_seq_ids)  
+    else:
+        max_iterations = 1
+ 
         
     # Number of genetic element in which at least one exploratory QSS has been found
     n_successful_genetic_element = 0
@@ -101,28 +102,29 @@ def __main__():
     # Do the next steps of the algorithm for each genetic element (except for fast mode (all genetic element processed at once)) 
     for i in range(0, max_iterations):
         
-        if args.fast:
-            seq_id = suffix_faa = ''
-        else:
+        if args.preserve_ram:
             seq_id = list_seq_ids[i]
             suffix_faa = '_' + seq_id
             print('#####################################')
             print('* Processing genetic element %d/%d: %s' % (i+1, max_iterations, seq_id))
+        else:
+            seq_id = suffix_faa = ''
+
             
         # Integrate genomic info of ORFs into python dictionaries (protein_dict and position_dict)
         print('-------------------------------------')
         print('* Storing annotated ORFs into python dictionaries ...')
         if annotation_format == 'gff':
-            if args.fast:
-                duplicates, position_dict, protein_dict = handle_annotations.gff_to_dict(annotation_file)
-            else:
+            if args.preserve_ram:
                 duplicates, position_dict, protein_dict = handle_annotations.gff_to_dict(os.path.join(working_dir, seq_id + '.gff'))
+            else:
+                duplicates, position_dict, protein_dict = handle_annotations.gff_to_dict(annotation_file)
             print('  Gff to dictionaries done!')
         elif annotation_format == 'feature_tbl':
-            if args.fast:
-                duplicates, position_dict, protein_dict = handle_annotations.feature_tbl_to_dict(annotation_file)
-            else:
+            if args.preserve_ram:
                 duplicates, position_dict, protein_dict = handle_annotations.feature_tbl_to_dict(os.path.join(working_dir, seq_id + '.txt'))
+            else:
+                duplicates, position_dict, protein_dict = handle_annotations.feature_tbl_to_dict(annotation_file)
             print('  Feature table to dictionaries done!')
 
         # Copy fasta but duplicate sequence that appears multiple times in the annotation file (multiple copies or identical genes across genomes) and assign them a specific header (<protein_id>__nb_dupli<n>)
@@ -140,30 +142,31 @@ def __main__():
             except:
                 sys.exit('error: intersection between faa and %s based on protein_id is not possible. e.g. the protein_id \'%s\' extracted from faa is not identified as a protein_id in the %d' % (first_protein, annotation_format))
         
-        if args.fast:
-            propeptides_ids = all_small_proteins
-            receptors_ids = all_medium_proteins
-        else:
+        if args.preserve_ram:
             # Intersect list of all small proteins with list of proteins encoded by the current genetic element (same rationale for receptors)
             propeptides_ids = list(set.intersection(set(list(protein_dict.keys())), set(all_small_proteins)))
-            receptors_ids = list(set.intersection(set(list(protein_dict.keys())), set(all_medium_proteins)))        
+            receptors_ids = list(set.intersection(set(list(protein_dict.keys())), set(all_medium_proteins)))   
+        else:
+            propeptides_ids = all_small_proteins
+            receptors_ids = all_medium_proteins
+     
         if len(propeptides_ids) == 0 or len(receptors_ids) == 0:
-            if args.fast:
-                sys.exit('  End of execution: no proteins of length compatible with propeptides or receptors')
-            else:
+            if args.preserve_ram:
                 print('  Skip current genetic element: no proteins of length compatible with propeptides or receptors')
-                continue         
+                continue  
+            else:
+                sys.exit('  End of execution: no proteins of length compatible with propeptides or receptors')        
 
         # Step 1: reduce the search space to receptors adjacent to propeptides and vice-versa
         print('-------------------------------------')
         print('* Filtering potential propeptides and receptors based on coding sequence adjacency ...')
         propeptides_ids, receptors_ids = handle_fasta.filter_by_adjacency(propeptides_ids, receptors_ids, protein_dict, position_dict)
         if not (propeptides_ids or receptors_ids):
-            if args.fast:
-                sys.exit('  End of execution: no proteins passed the filter')
-            else:
+            if args.preserve_ram:
                 print('  Skip current genetic element: no proteins passed the filter')
                 continue
+            else:
+                sys.exit('  End of execution: no proteins passed the filter')
         handle_fasta.subset_by_id(os.path.join(working_dir, 'step0_propeptides.faa'), os.path.join(working_dir, 'step1_propeptides.faa'), propeptides_ids)
         handle_fasta.subset_by_id(os.path.join(working_dir, 'step0_receptors.faa'), os.path.join(working_dir, 'step1_receptors.faa'), receptors_ids)
         print('  Filter done!')
@@ -177,11 +180,11 @@ def __main__():
         receptors_ids, tpr_hmm_df = hmm.hmmsearch(os.path.join(working_dir, 'step1_receptors.faa'), os.path.join(rrnpp_detector_dir, 'HMMs', 'TPRs.hmm'),
                                                   os.path.join(working_dir, 'hmmsearch_TPRs_stdout.txt'), os.path.join(working_dir, 'hmmsearch_TPRs_tblout.txt'), args.cpu, hmmsearch_max_evalue)
         if not receptors_ids:
-            if args.fast:
-                sys.exit('  End of execution: no proteins passed the filter')
-            else:
+            if args.preserve_ram:
                 print('  Skip current genetic element: no potential receptors passed the filter')
                 continue
+            else:
+                sys.exit('  End of execution: no proteins passed the filter')
         print('  Filter done!')
         print('  %d potential receptors at this stage of the analysis' % len(receptors_ids))
         handle_fasta.subset_by_id(os.path.join(working_dir, 'step1_receptors.faa'), os.path.join(working_dir, 'step2_receptors.faa'), receptors_ids)
@@ -189,11 +192,11 @@ def __main__():
         print('* Filtering potential propeptides not adjacent to TPR-containing receptors ...')
         propeptides_ids, receptors_ids = handle_fasta.filter_by_adjacency(propeptides_ids, receptors_ids, protein_dict, position_dict)
         if not propeptides_ids:
-            if args.fast:
-                sys.exit('  End of execution: no potential propeptides passed the filter')
-            else:
+            if args.preserve_ram:
                 print('  Skip current genetic element: no potential propeptides passed the filter')
                 continue
+            else:
+                sys.exit('  End of execution: no potential propeptides passed the filter')
         handle_fasta.subset_by_id(os.path.join(working_dir, 'step1_propeptides.faa'), os.path.join(working_dir, 'step2_propeptides.faa'), propeptides_ids)
         print('  %d potential propeptides at this stage of the analysis' % len(propeptides_ids))
         print('  %d potential receptors at this stage of the analysis' % len(receptors_ids))
@@ -282,7 +285,7 @@ def __main__():
         print('-------------------------------------')
         print('Completed!')
         
-    shutil.rmtree(working_dir)
+    #shutil.rmtree(working_dir)
     
 if __name__=='__main__': __main__()
 

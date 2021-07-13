@@ -61,7 +61,10 @@ sudo apt-get install ncbi-blast+
 ```RRNPP_detector``` must be run with python3 against one or multiple (meta)genome(s)
 ```
 usage: rrnpp_detector.py [-h] [-o OUT_DIR] [--fna FNA] [--faa FAA] [--gff GFF]
-                         [--ft FEATURE_TBL] [--cpu CPU] [--fast]
+                         [--ft FEATURE_TBL] [--cpu CPU] [--preserve_ram]
+
+RRNPP_detector: a tool to detect RRNPP-Type quorum sensing systems in gram-
+positive bacteria and bacteriophages genomes
 
 optional arguments:
   -h, --help        show this help message and exit
@@ -75,9 +78,8 @@ optional arguments:
   --ft FEATURE_TBL  path to the annotations of the target genome(s) in the
                     NCBI_assembly feature_table format
   --cpu CPU         number of cpu to use (default is 1)
-  --fast            maximize speed at the expense of RAM (will process all
-                    distinct genomes together)
-
+  --preserve_ram    minimize RAM usage at the expense of speed (will process
+                    target genomes one by one instead of all together)
 ```
 
 ### Option 1: Provide one or multiple genome(s)
