@@ -4,7 +4,7 @@
 
 ```RRNPP_detector``` aims at identifying candidate RRNPP-type quorum sensing systems in chromosomes or in mobile genetic elements (plasmids, phages) of gram-positive bacteria (e.g. Firmicutes).
 
-```RRNPP_detector``` defines candidate RRNPP-type quorum sensing systems as tandems of adjacent ORFs encoding a candidate receptor (250-500aa protein matching HMMs of peptide-binding tetraticopeptide repeats (TPRs)) and a candidate pro-peptide (15-65aa protein predicted to be excreted via the SEC-translocon) 
+```RRNPP_detector``` defines candidate RRNPP-type quorum sensing systems as tandems of adjacent ORFs encoding a candidate receptor (250-500aa protein matching HMMs of peptide-binding tetraticopeptide repeats (TPRs)) and a candidate pro-peptide (10-70aa protein predicted to be excreted via the SEC-translocon) 
 
 ```RRNPP_detector``` outputs three types of files:  
 \- ```summary.tsv```: a tabular summary of the candidate RRNPP-type quorum sensing systems detected in the target genome(s)  
@@ -103,20 +103,20 @@ python rrnpp_detector.py --faa ~/bacillus_subtilis.faa --ft ~/bacillus_subtilis_
 
 ## 4. Practical example of analysis
 
-In this example, we will propose to use ```RRNPP_detector``` to predict RRNPP-type quorum sensing systems in all genomes of Viruses available on the NCBI.
+In this example, we will propose to use ```RRNPP_detector``` against all genomes of Viruses available on the NCBI.
 
-To this end, download the protein sequences and the annotated features of these genomes from the NCBI assembly database: https://www.ncbi.nlm.nih.gov/assembly/. Once on the web page, enter the following query search:
+To this end, we will download the protein sequences and the annotated features of these genomes from the NCBI assembly database: https://www.ncbi.nlm.nih.gov/assembly/. Once on the web page, enter the following query search:
 
 ```
 Viruses[ORGN] AND "Latest GenBank"[Filter]
 ```
 
-Then, click the button "Download Assemblies" and download the two following files:
+Then, we will click the button "Download Assemblies" and download the two following files:
 
 * "Protein FASTA (.faa)" with "Genbank" selected as source database
 * "Feature table (.txt)" with "Genbank" selected as source database
 
-Now, move these two archives in a dedicated directory
+Now we will move these two archives in a dedicated directory
 
 ```bash
 mkdir ~/genomes_of_viruses
@@ -124,7 +124,7 @@ mv ~/Downloads/genome_assemblies_prot_fasta.tar ~/genomes_of_viruses
 mv ~/Download/genome_assemblies_features.tar ~/genomes_of_viruses
 ```
 
-Extract the files from these two archives and concatenate all protein fastas in one ```faa``` and all feature tables in one ```feature_table```
+Next, we will extract the files from these two archives and concatenate all protein fastas in one ```faa``` and all feature tables in one ```feature_table```
 
 ```bash
 cd ~/genomes_of_viruses
@@ -141,4 +141,3 @@ All that remains to do is to execute ```RRNPP_detector``` against this dataset. 
 cd ~/Programs/rrnpp_detector
 python rrnpp_detector.py --faa ~/genomes_of_viruses/viruses_protein.faa --ft ~/genomes_of_viruses/viruses_feature_table.txt -o ~/genomes_of_viruses --cpu 20
 ```
-
