@@ -33,18 +33,18 @@ def check_anno_coordinates(df):
     
 
 def feature_tbl_to_dict(feature_tbl):
-    # read table
-    df = pandas.read_csv(feature_tbl, sep='\t', comment='#', header=None)                  
-    # check number of columns is 20                    
-    if len(df.columns) != 20:
-        sys.exit('EXIT: Feature table \'%s\' is expected to have 20 columns. %d found' % (feature_tbl, len(df.columns)))   
-    # make header
-    df.columns = ['feature', 'class', 'assembly', 'assembly_unit', 'seq_type', 'chromosome', 
-                  'genomic_accession', 'start', 'end', 'strand', 'protein_id', 
-                  'non-redundant_refseq', 'related_accession','name', 'symbol', 'GeneID', 
-                  'locus_tag', 'feature_interval_length', 'product_length', 'attributes']
-    # some quality check
-    check_anno_coordinates(df)
+    ft_column_names = ['feature', 'class', 'assembly', 'assembly_unit', 'seq_type', 'chromosome', 'genomic_accession', 'start', 'end', 'strand', 'protein_id',
+                       'non-redundant_refseq', 'related_accession','name', 'symbol', 'GeneID', 'locus_tag', 'feature_interval_length', 'product_length', 'attributes']
+    useful_column_names = ['feature', 'class', 'genomic_accession', 'start', 'end', 'strand', 'protein_id']
+    column_types = {'feature': str, 'class': str, 'genomic_accession': str, 'start': int, 'end': int, 'strand': str, 'protein_id': str}
+    try:
+        df = pandas.read_csv(feature_tbl, sep='\t', comment='#', header=None, names=ft_column_names, usecols=useful_column_names, dtype=column_types)
+    except Exception as e:
+        print('EXIT: the annotation file does not comply with the feature table format requirements.')
+        print('Reading the feature table exited with the following error:')
+        sys.exit(e)
+    if not df['strand'].str.match(r'^[+-.]$').all():
+       sys.exit('error: column \'strand\' (field n°%d) in the input annotation file is not filled only with the expected \'+\', \'-\' or \'.\' characters' % df.columns.get_loc('strand'))
     # retain only ORFs that encode proteins
     orf_df = df.loc[(df['feature'] == 'CDS') & (df['class'] == 'with_protein')].reset_index()
     # check there are cds in the feature table
@@ -79,22 +79,24 @@ def gff_attributes_to_columns(df):
     attribute_df['at_dic_keys'] = attribute_df['at_dic'].apply(lambda at_dic: list(at_dic.keys()))
     merged_attribute_list = list(itertools.chain.from_iterable(attribute_df['at_dic_keys']))
     nonredundant_list = sorted(list(set(merged_attribute_list)))
-    final_df = df.loc[:, "genomic_accession":"phase"]
+    final_df = df.loc[:, "genomic_accession":"strand"]
     for atr in nonredundant_list:
         final_df[atr] = attribute_df["at_dic"].apply(lambda at_dic: at_dic.get(atr))
     return final_df
     
 
 def gff_to_dict(gff):
-    # read table
-    df = pandas.read_csv(gff, sep='\t', comment='#', header=None)  
-    # check number of columns is 20                    
-    if len(df.columns) != 9:
-        sys.exit('EXIT: Gff \'%s\' is expected to have 9 columns. %d found' % (gff, len(df.columns)))
-    # make header
-    df.columns = ['genomic_accession', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes']
-    # some quality check
-    check_anno_coordinates(df)
+    gff_column_names = ['genomic_accession', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes']
+    useful_column_names = ['genomic_accession', 'type', 'start', 'end', 'strand', 'attributes']
+    column_types = {'genomic_accession': str, 'type': str, 'start': int, 'end': int, 'strand': str, 'attributes': str}
+    try:
+        df = pandas.read_csv(gff, sep='\t', comment='#', header=None, names=gff_column_names, usecols=useful_column_names, dtype=column_types)
+    except Exception as e:
+        print('EXIT: the annotation file does not comply with gff format requirements.')
+        print('Reading the gff exited with the following error:')
+        sys.exit(e)
+    if not df['strand'].str.match(r'^[+-.]$').all():
+       sys.exit('error: column \'strand\' (field n°%d) in the input annotation file is not filled only with the expected \'+\', \'-\' or \'.\' characters' % df.columns.get_loc('strand'))
     # retain only ORFs that encode proteins
     orf_df = df.loc[df['type'] == 'CDS']
     # check there are cds in the gff
@@ -145,6 +147,55 @@ def make_small_annotation_file(annofile, test_file):
                      outfile.write(line)
          infile.close()
     outfile.close()
+
+
+# the two following test functions will be called only with a chunk annotation file and will return precise errors regarding gff or ft format 
+def test_feature_tbl(feature_tbl):
+    # read table
+    df = pandas.read_csv(feature_tbl, sep='\t', comment='#', header=None)                  
+    # check number of columns is 20                    
+    if len(df.columns) != 20:
+        sys.exit('EXIT: Feature table \'%s\' is expected to have 20 columns. %d found' % (feature_tbl, len(df.columns)))   
+    # make header
+    df.columns = ['feature', 'class', 'assembly', 'assembly_unit', 'seq_type', 'chromosome', 
+                  'genomic_accession', 'start', 'end', 'strand', 'protein_id', 
+                  'non-redundant_refseq', 'related_accession','name', 'symbol', 'GeneID', 
+                  'locus_tag', 'feature_interval_length', 'product_length', 'attributes']
+    # some quality check
+    check_anno_coordinates(df)
+    # retain only ORFs that encode proteins
+    orf_df = df.loc[(df['feature'] == 'CDS') & (df['class'] == 'with_protein')].reset_index()
+    # check there are cds in the feature table
+    if orf_df.empty:
+        sys.exit('error: columns \'features\' and \'class\' (fields n°1 and 2) of the input feature table never correspond to the \'CDS\twith_protein\' string')
+
+    
+def test_gff(gff):
+    # read table
+    df = pandas.read_csv(gff, sep='\t', comment='#', header=None)  
+    # check number of columns is 20                    
+    if len(df.columns) != 9:
+        sys.exit('EXIT: Gff \'%s\' is expected to have 9 columns. %d found' % (gff, len(df.columns)))
+    # make header
+    df.columns = ['genomic_accession', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes']
+    # some quality check
+    check_anno_coordinates(df)
+    # retain only ORFs that encode proteins
+    orf_df = df.loc[df['type'] == 'CDS']
+    # check there are cds in the gff
+    if orf_df.empty:
+        sys.exit('error: column \'type\' (fields n°3) of the input gff never corresponds to the \'CDS\' string')
+    # turn attributes string into columns
+    orf_df = gff_attributes_to_columns(orf_df)
+    # check a protein_id or a id column is present in the data frame
+    if not 'protein_id' in orf_df:
+        if 'ID' in orf_df:
+            temp_id = orf_df['ID']
+        elif 'id' in orf_df:
+            temp_id = orf_df['id']
+        else:
+            sys.exit('Neither the tag \'protein_id\' nor \'ID\' are present in the column \'attributes\' of the input gff')
+        orf_df['protein_id'] = orf_df['genomic_accession'] + temp_id.apply(lambda x: '_' + x.split('_')[1])
     
 
 def test_annotation_file(annotation_file, annotation_format, out_dir):
@@ -152,11 +203,11 @@ def test_annotation_file(annotation_file, annotation_format, out_dir):
     if annotation_format == 'gff':
         test_file = os.path.join(out_dir, "small_test_gff.gff")
         make_small_annotation_file(annotation_file, test_file)
-        tmp = gff_to_dict(test_file)
+        test_gff(test_file)
     elif annotation_format == 'feature_tbl':
         test_file = os.path.join(out_dir, "small_test_feature_table.txt")
         make_small_annotation_file(annotation_file, test_file)
-        tmp = feature_tbl_to_dict(test_file)
+        test_feature_tbl(test_file)
         
 
 def split_annotation_file(annotation_file, annotation_format, out_dir):
