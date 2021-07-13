@@ -82,20 +82,13 @@ def explicitize_duplicates(in_faa, out_dir, duplicates):
     return list_protein_ids
 
 
-def list_to_dict(l):
-    d = dict()
-    for element in l:
-        d[element] = True
-    return d    
-
-
 def filter_by_adjacency(propeptides_ids, receptors_ids, protein_dict, position_dict):
     if len(propeptides_ids) < len(receptors_ids):
         list_a = propeptides_ids
-        dict_b = list_to_dict(receptors_ids)
+        dict_b = dict.fromkeys(receptors_ids, True)
     else:
         list_a = receptors_ids
-        dict_b = list_to_dict(propeptides_ids)
+        dict_b = dict.fromkeys(propeptides_ids, True)
     filt_list_a = list()
     filt_list_b = list()
     unique_orfs = dict()
@@ -125,7 +118,7 @@ def filter_by_adjacency(propeptides_ids, receptors_ids, protein_dict, position_d
     
 
 def subset_by_id(in_faa, out_faa, proteins):
-    ids = list_to_dict(proteins)
+    ids = dict.fromkeys(proteins, True)
     k = 0
     # create a dictionary of visited proteins in order to skip reading fasta if all query proteins have been extracted from the faa 
     is_visited = dict()
