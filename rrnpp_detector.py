@@ -285,7 +285,7 @@ def __main__():
         print('-------------------------------------')
         print('Completed!')
         
-    #shutil.rmtree(working_dir)
+    shutil.rmtree(working_dir)
     
 if __name__=='__main__': __main__()
 
