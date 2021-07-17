@@ -32,7 +32,7 @@ def __main__():
     
     # Load built-in parameters
     # I might consider enabling the user to change default parameters in the future
-    propeptide_length_boundaries = [15, 65]
+    propeptide_length_boundaries = [10, 70]
     receptor_length_boundaries = [250, 500]
     hmmsearch_max_evalue = 1E-5
     max_intergenic_distance = 400 # nt
