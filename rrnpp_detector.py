@@ -96,7 +96,7 @@ def __main__():
         max_iterations = 1
  
         
-    # Number of genetic element in which at least one exploratory QSS has been found
+    # Number of genetic element in which at least one permissive QSS has been found
     n_successful_genetic_element = 0
     
     # Do the next steps of the algorithm for each genetic element (except for fast mode (all genetic element processed at once)) 
@@ -227,9 +227,9 @@ def __main__():
         print('-------------------------------------')
         
         # Merge receptors results (hmmsearch, blast) with propeptides results (signalp) based on coding sequence adjacency
-        print('* Summarizing intermediate results (exploratory output) ...')
-        exploratory_summary_df = make_summary.make_summary(tpr_hmm_df, tf_hmm_df, blast_df, signalp_df, protein_dict, position_dict)
-        print('  %d potential quorum sensing systems at this stage of the analysis' % len(exploratory_summary_df))
+        print('* Summarizing intermediate results (permissive output) ...')
+        permissive_summary_df = make_summary.make_summary(tpr_hmm_df, tf_hmm_df, blast_df, signalp_df, protein_dict, position_dict)
+        print('  %d potential quorum sensing systems at this stage of the analysis' % len(permissive_summary_df))
         
         # Pandas.write_csv parameters for outputting the summaries
         if n_successful_genetic_element == 0:
@@ -244,7 +244,7 @@ def __main__():
         # Step 3: filter propeptides not predicted to be secreted via the SP(Sec/SPI) mode and Write output files
         print('-------------------------------------')
         print('* Filtering potential propeptides not predicted to be secreted via the SP(Sec/SPI) mode ...')
-        conservative_summary_df = exploratory_summary_df.loc[(exploratory_summary_df['Prediction'] == 'SP(Sec/SPI)') & (exploratory_summary_df['intergenic_distance'] <= max_intergenic_distance)]
+        conservative_summary_df = permissive_summary_df.loc[(permissive_summary_df['Prediction'] == 'SP(Sec/SPI)') & (permissive_summary_df['intergenic_distance'] <= max_intergenic_distance)]
         conservative_propeptides_ids = conservative_summary_df['propeptide_id'].unique().tolist()
         conservative_receptors_ids = conservative_summary_df['receptor_id'].unique().tolist()
         if conservative_propeptides_ids:
@@ -255,19 +255,19 @@ def __main__():
             print('  %d potential quorum sensing systems detected' % len(conservative_summary_df))
             print('-------------------------------------')
             print('* Writing output files ...')
-            if len(exploratory_summary_df) > len(conservative_summary_df):
-                # Filter all qss in exploratory_summary_df that are present in conservative_summary_df
-                only_exploratory_qss_ids = make_summary.setdiff(exploratory_summary_df['qss_id'].tolist(), conservative_summary_df['qss_id'].tolist())
-                exploratory_summary_df = exploratory_summary_df[exploratory_summary_df['qss_id'].isin(only_exploratory_qss_ids)]
-                exploratory_summary_df.drop('qss_id', axis=1).to_csv(os.path.join(out_dir, 'exploratory_summary.tsv'), sep='\t', header=write_header, index=False, mode=writing_mode)
-                # The exploratory proteins are all the proteins that have been filtered out at step 3 
-                exploratory_propeptides_ids = make_summary.setdiff(propeptides_ids, conservative_propeptides_ids)
-                exploratory_receptors_ids = make_summary.setdiff(receptors_ids, conservative_receptors_ids)
-                # Write the exploratory output faa
-                if len(exploratory_propeptides_ids) > 0:
-                    handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_propeptides.faa'), os.path.join(fasta_out_dir, 'exploratory_candidate_propeptides' + suffix_faa + '.faa'), exploratory_propeptides_ids)
-                if len(exploratory_receptors_ids) > 0:
-                    handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_receptors.faa'), os.path.join(fasta_out_dir, 'exploratory_candidate_receptors' + suffix_faa + '.faa'), exploratory_receptors_ids)
+            if len(permissive_summary_df) > len(conservative_summary_df):
+                # Filter all qss in permissive_summary_df that are present in conservative_summary_df
+                only_permissive_qss_ids = make_summary.setdiff(permissive_summary_df['qss_id'].tolist(), conservative_summary_df['qss_id'].tolist())
+                permissive_summary_df = permissive_summary_df[permissive_summary_df['qss_id'].isin(only_permissive_qss_ids)]
+                permissive_summary_df.drop('qss_id', axis=1).to_csv(os.path.join(out_dir, 'permissive_summary.tsv'), sep='\t', header=write_header, index=False, mode=writing_mode)
+                # The permissive proteins are all the proteins that have been filtered out at step 3 
+                permissive_propeptides_ids = make_summary.setdiff(propeptides_ids, conservative_propeptides_ids)
+                permissive_receptors_ids = make_summary.setdiff(receptors_ids, conservative_receptors_ids)
+                # Write the permissive output faa
+                if len(permissive_propeptides_ids) > 0:
+                    handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_propeptides.faa'), os.path.join(fasta_out_dir, 'permissive_candidate_propeptides' + suffix_faa + '.faa'), permissive_propeptides_ids)
+                if len(permissive_receptors_ids) > 0:
+                    handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_receptors.faa'), os.path.join(fasta_out_dir, 'permissive_candidate_receptors' + suffix_faa + '.faa'), permissive_receptors_ids)
             # Write the conservative output files
             handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_propeptides.faa'), os.path.join(fasta_out_dir, 'conservative_candidate_propeptides' + suffix_faa + '.faa'), conservative_propeptides_ids)
             handle_fasta.subset_by_id(os.path.join(working_dir, 'step2_receptors.faa'), os.path.join(fasta_out_dir, 'conservative_candidate_receptors' + suffix_faa + '.faa'), conservative_receptors_ids)
@@ -276,10 +276,10 @@ def __main__():
         else:
             print('  No potential propeptides passed the filter')
             print('-------------------------------------')
-            print('* Writing exploratory results before analyzing next genetic element ...')
-            shutil.move(os.path.join(working_dir, 'step2_propeptides.faa'), os.path.join(fasta_out_dir, 'exploratory_candidate_propeptides' + suffix_faa + '.faa'))
-            shutil.move(os.path.join(working_dir, 'step2_receptors.faa'), os.path.join(fasta_out_dir, 'exploratory_candidate_receptors' + suffix_faa + '.faa'))
-            exploratory_summary_df.drop('qss_id', axis=1).to_csv(os.path.join(out_dir, 'exploratory_summary.tsv'), sep='\t', header=write_header, index=False, mode=writing_mode)
+            print('* Writing permissive results before analyzing next genetic element ...')
+            shutil.move(os.path.join(working_dir, 'step2_propeptides.faa'), os.path.join(fasta_out_dir, 'permissive_candidate_propeptides' + suffix_faa + '.faa'))
+            shutil.move(os.path.join(working_dir, 'step2_receptors.faa'), os.path.join(fasta_out_dir, 'permissive_candidate_receptors' + suffix_faa + '.faa'))
+            permissive_summary_df.drop('qss_id', axis=1).to_csv(os.path.join(out_dir, 'permissive_summary.tsv'), sep='\t', header=write_header, index=False, mode=writing_mode)
             print('  Output files written!')
         
         print('-------------------------------------')

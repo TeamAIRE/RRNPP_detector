@@ -13,7 +13,7 @@
 
 As a few experimentally-validated RRNPP-type propeptides are known to be excreted via other secretion systems than the SEC-translocon (e.g. PrgQ and Shp), ```RRNPP_detector``` was designed to specify two kinds of prefixes for each output files:  
 \- ```conservative_```: satisfying the condition that the propeptides must be predicted to be secreted via the SEC-translocon  
-\- ```exploratory_```: without the above condition
+\- ```permissive_```: without the above condition
 
 ## 2. How to install ```RRNPP_detector```?
 
