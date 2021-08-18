@@ -21,7 +21,7 @@ As a few experimentally-validated RRNPP-type propeptides are known to be excrete
 
 ```bash
 cd ~
-git clone https://gitlab.com/charles-bernard/rrnpp_detector.git
+git clone https://github.com/TeamAIRE/RRNPP_detector.git
 ```
 
 ### Manual installation of the dependencies
