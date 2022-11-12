@@ -1,0 +1,140 @@
+PERL version of the software
+
+TPRpred suite for  prediction of TPR, PPR and SEL1-like repeats from protein sequences
+version 1.0
+
+(C) 2006 Max-Planck Society
+This software is available under the GNU GENERAL PUBLIC LICENSE (http://www.gnu.org/licenses/gpl.txt)
+
+For bug reports, question, or comments please contact 
+johannes.soeding@tuebingen.mpg.de
+
+_______________________________________________________________________________________
+
+1. Getting started
+PERL modules
+AlignRep.pm  
+Erf.pm 
+ReadProfile.pm 
+
+Profiles:
+The profiles are similar to the format of HMMER HMM files
+
+tpr2.8.pp
+Tetratrico Peptide Repeat profile
+
+ppr4.5.pp
+Pentatrico Peptide Repeat profile
+
+sel4.8.pp
+SEL1-Like repeat profile
+
+tprpred:
+Search a database of fasta format protein sequeces with a query profile
+
+Type tprpred.pl to get a more detailed description of the syntax:
+
+  Repeat identification:
+  Scan (multiple/single) sequence fasta file for occurence of repeat proteins.
+  Return sorted list of sequences with their per-protein p-values, repeat positions and per-repeat p-values.
+  Usage: tprpred  infile [options]
+  Options:
+   -r  pssm-file pssm of the repeat
+   -v  int	 verbose mode  (def=0)
+   -o  alifile   Print out the aligned repeats in fasta format into alifile
+   -a  alifile   Same, but append to alifile
+   -e  [0,inf]   Maximum per-protein e-value for output of repeat residues to alifile (def=1)
+   -p  [0,inf]   Maximun per-repeat p-value for output of repeat residues to alifile (def=1)
+   -n  [0,inf]   Minimum number of single repeat hits for output to alifile
+   -L  int	 Maximum number of lines in hit list(def=10000)
+   -E  [0,inf]   Maximum per-protein e-value for moutput in hit list (def=10000)
+   -N  [0,inf]   Minimum number of single-repeat hits for output to hit list
+  Search options:
+   -p0 [0,1]	 Probability for single-repeat chance score >0 in whole protein (def=0.01)
+   -p1 [0,1]	 Probability for single-repeat chance score >0 in K residues following repeat (def=0.01)
+   -K  [1,inf]   When a repeat follows another by <=K residues following repeat(def=10)
+   -g  [0,inf]   Gap penalty (in bits) for gaps between repeat hits of >K residues
+
+Example: tprpred malt.fa -r tpr2.8.pp -o malt.out
+
+To start using tprpred, unzip the file TPRpred_PERL.zip first:
+ unzip TPRpred_PERL.zip
+  
+Test whether tprpred works by typing
+tprpred.pl stand_proteins.fa -r tpr2.8.pp
+_______________________________________________________________________________________
+
+2. Input sequence format
+
+tprpred reads protein sequences in FASTA format.
+
+_______________________________________________________________________________________
+
+3. Summary of search output
+
+Summary hit list 
+
+Do a search with the sequence file containing a set of 56 STAND family proteins using tpr2.8.pp profile:
+
+manju@laurin$ tprpred.pl stand_proteins.fa -r tpr2.8.pp -v
+
+nseqs=56
+Nr. Sequence      Len  Score  P-value  E-value   Probab  #  Description          pos score ...
+1   gi|71676731| 1507  999.0  0.0E+00  0.0E+00  100.00% 18  TPR repeat:Kinesin   79: 8.8e-05  121: 3.8e-10  163: 1.9e-11  205: 8.9e-11  247: 9.5e-12  289: 4. 0e-11  331: 1.9e-11  373: 2.3e-11  415: 2.4e-11  457: 8.4e-11  499: 2.1e-10  541: 2.8e-11  583: 5.0e-11  625: 5.0e-11  667: 2.4e-11  709: 3.5e-11  751: 3.2e-11  793: 2.0e-10
+2   gi|76260381| 1170   76.5  9.1E-24  5.1E-22  100.00%  8  TPR repeat:Bacteri  493: 1.0e-07  533: 7.3e-08  573: 5.5e-06  653: 7.3e-03  779: 2.2e-04  819: 1. 5e-04 1074: 1.4e-04 1108: 7.1e-05
+3   gi|46916437|  902   70.3  6.7E-22  3.8E-20  100.00% 10  putative malT regu  341: 4.5e-03  409: 7.4e-03  452: 5.7e-05  491: 8.2e-06  531: 2.7e-05  573: 1. 6e-05  612: 2.5e-05  651: 2.1e-01  691: 7.1e-04  731: 1.4e-05
+4   gi|77951639|  916   68.2  2.9E-21  1.6E-19  100.00%  8  regulatory protein  456: 9.5e-03  495: 3.5e-07  535: 2.1e-04  578: 1.7e-01  620: 2.0e-07  662: 1. 5e-06  700: 3.1e-04  740: 4.7e-06
+5   gi|59713994|  901   64.5  3.7E-20  2.1E-18  100.00%  9  MalT regulatory pr  409: 9.4e-03  452: 2.1e-05  491: 8.9e-05  531: 1.9e-03  573: 3.7e-05  612: 1. 5e-06  651: 1.5e-01  691: 9.2e-08  731: 4.1e-04
+6   gi|46164562|  906   60.2  7.4E-19  4.2E-17  100.00%  8  COG2909: ATP-depen  429: 2.1e-03  472: 1.7e-05  511: 2.1e-05  551: 2.4e-06  594: 4.2e-05  633: 1. 4e-03  721: 5.6e-04  761: 1.5e-05
+7   gi|77457134|  850   59.8  1.0E-18  5.7E-17  100.00%  9  ATP-dependent tran  386: 5.9e-04  429: 7.0e-07  468: 8.2e-03  508: 6.3e-02  550: 6.0e-05  589: 5. 6e-04  631: 7.5e-06  718: 1.3e-06  758: 3.5e-03
+8   gi|76259013| 1067   57.2  6.2E-18  3.5E-16  100.00%  9  transcriptional ac  398: 1.1e-04  438: 1.3e-06  477: 2.6e-02  518: 5.0e-04  558: 3.1e-04  600: 4. 9e-03  640: 1.4e-04  978: 8.0e-06 1012: 2.0e-05
+9   gi|9949559|g  827   54.8  3.2E-17  1.8E-15  100.00%  9  probable transcrip  371: 1.2e-04  413: 9.3e-04  452: 2.5e-04  492: 6.6e-04  534: 8.6e-06  573: 6. 5e-04  615: 2.7e-03  662: 5.0e-03  702: 1.5e-06
+10  gi|75428383|  928   52.4  1.6E-16  9.1E-15  100.00%  8  ATP-dependent tran  479: 8.9e-05  518: 2.5e-05  558: 2.2e-05  600: 9.8e-04  637: 4.3e-03  674: 1. 7e-01  716: 1.2e-06  756: 4.5e-05
+11  gi|37524480|  904   51.4  3.5E-16  1.9E-14  100.00%  9  positive regulator  409: 2.1e-03  452: 1.2e-03  491: 1.0e-04  531: 9.0e-05  573: 3.9e-05  612: 2. 9e-05  653: 1.0e-02  691: 9.1e-05  731: 4.0e-04
+12  gi|70728347|  848   50.5  6.4E-16  3.6E-14  100.00%  9  transcriptional re  383: 1.8e-04  426: 2.3e-05  465: 1.0e-01  505: 5.4e-03  547: 9.3e-05  586: 5. 3e-04  628: 1.4e-05  675: 1.9e-03  715: 7.5e-05
+13  gi|78049092|  923   46.8  8.0E-15  4.5E-13   99.99%  5  transcriptional re  511: 6.1e-03  551: 3.2e-09  593: 4.0e-07  721: 7.9e-03  761: 6.1e-05
+14  gi|15600782|  921   46.5  1.0E-14  5.7E-13   99.99%  9  malT regulatory pr  428: 7.7e-03  471: 1.0e-04  510: 4.1e-05  550: 6.5e-04  592: 9.7e-05  631: 3. 1e-05  672: 4.0e-02  710: 8.3e-05  750: 3.1e-03
+15  gi|46143282|  905   46.1  1.3E-14  7.4E-13   99.99%  8  COG2909: ATP-depen  458: 5.0e-04  497: 2.4e-03  537: 5.3e-03  577: 4.8e-04  614: 2.3e-03  654: 7. 9e-02  693: 1.9e-07  733: 1.1e-06
+16  gi|67908526|  414   42.1  2.1E-13  1.2E-11   99.95%  5  regulatory protein   21: 1.8e-04   61: 9.5e-05  103: 1.0e-04  223: 8.9e-04  263: 5.0e-06
+17  gi|66044246|  920   41.6  2.9E-13  1.6E-11   99.94%  8  regulatory protein  371: 9.9e-03  440: 2.2e-03  483: 3.6e-05  522: 7.3e-05  562: 1.8e-05  605: 7. 2e-02  644: 2.1e-03  686: 9.4e-04
+18  gi|47574286|  905   41.0  4.5E-13  2.5E-11   99.93%  5  COG2909: ATP-depen  458: 3.5e-04  500: 1.2e-05  540: 2.6e-07  581: 5.3e-03  621: 2.8e-05
+19  gi|76261137| 1084   37.2  6.4E-12  3.6E-10   99.75%  5  Transcriptional re  515: 1.3e-03  552: 3.0e-06  592: 3.9e-05  633: 1.9e-04 1018: 2.9e-03
+20  gi|73538584|  913   36.4  1.1E-11  6.2E-10   99.67%  9  regulatory protein  426: 1.9e-04  466: 6.6e-02  505: 9.1e-06  545: 9.2e-04  588: 2.7e-02  628: 1. 6e-02  668: 6.8e-04  713: 4.4e-03  753: 3.2e-05
+21  gi|77954021|  891   35.2  2.6E-11  1.4E-09   99.51%  7  regulatory protein  423: 1.8e-04  459: 5.3e-05  497: 3.6e-04  537: 4.2e-03  580: 5.5e-05  619: 6. 4e-04  661: 5.3e-03
+22  gi|68175316|  914   34.8  3.4E-11  1.9E-09   99.44%  6  regulatory protein  541: 1.5e-04  583: 5.7e-06  623: 7.3e-04  663: 1.2e-01  706: 3.7e-04  746: 4. 7e-05
+23  gi|73537667| 1336   32.6  1.6E-10  8.9E-09   98.57%  6  regulatory protein  930: 2.0e-03  967: 8.2e-04 1009: 5.5e-04 1049: 1.5e-04 1089: 1.3e-04 1174: 4. 5e-04
+24  gi|504484|gb  921   31.5  3.3E-10  1.9E-08   97.62%  9  AcoK                436: 4.0e-03  479: 7.2e-03  518: 3.2e-03  558: 8.0e-04  600: 1.1e-01  640: 4. 4e-04  680: 6.2e-04  727: 2.1e-03  767: 1.6e-05
+25  gi|48781464|  872   30.0  9.2E-10  5.2E-08   95.20%  5  COG2909: ATP-depen  473: 5.5e-04  510: 1.9e-03  552: 2.2e-03  592: 3.5e-05  632: 5.0e-06
+26  gi|15026710|  862   30.0  9.4E-10  5.2E-08   95.16%  5  Regulatory protein  474: 1.1e-04  514: 4.5e-05  555: 3.4e-03  594: 2.3e-03  674: 1.0e-03
+27  gi|77633453|  651   29.9  9.7E-10  5.4E-08   95.04%  4  COG2909: ATP-depen  409: 5.1e-03  452: 1.4e-05  491: 4.9e-05  531: 3.1e-05
+28  gi|68556956|  904   29.1  1.7E-09  9.5E-08   92.83%  6  regulatory protein  454: 2.0e-06  493: 1.7e-04  533: 1.5e-02  575: 5.6e-03  615: 8.4e-05  655: 9. 2e-03
+29  gi|73537441|  947   29.0  1.8E-09  1.0E-07   92.39%  7  regulatory protein  469: 3.3e-03  506: 1.3e-03  545: 7.4e-04  585: 5.8e-04  627: 2.3e-04  667: 2. 8e-04  707: 9.3e-04
+30  gi|78063892|  922   25.7  1.8E-08  1.0E-06   70.53%  6  ATP-dependent tran  472: 1.6e-03  511: 2.3e-02  551: 4.0e-05  593: 2.1e-02  633: 2.3e-03  759: 4. 7e-04
+31  gi|78062243|  913   25.6  2.0E-08  1.1E-06   69.39%  4  ATP-dependent tran  542: 3.8e-07  584: 1.8e-03  624: 8.6e-03  664: 1.1e-04
+32  gi|32041835|  907   23.7  7.3E-08  4.1E-06   47.39%  4  COG2909: ATP-depen  469: 8.8e-06  508: 1.1e-03  548: 5.1e-03  753: 3.7e-03
+33  gi|73537995|  960   23.5  8.6E-08  4.8E-06   44.51%  4  regulatory protein  591: 1.5e-04  633: 5.1e-05  673: 7.4e-04  713: 2.8e-04
+34  gi|74023905|  930   23.4  8.8E-08  4.9E-06   44.05%  5  regulatory protein  484: 3.7e-05  523: 1.1e-04  562: 1.3e-03  604: 8.4e-04  644: 7.2e-03
+35  gi|71066001|  921   22.8  1.3E-07  7.5E-06   36.96%  6  probable transcrip  506: 1.4e-03  546: 5.8e-05  588: 1.6e-03  628: 6.8e-03  712: 6.1e-03  752: 1. 7e-04
+36  gi|76259642|  916   22.7  1.4E-07  8.1E-06   35.71%  6  regulatory protein  473: 1.5e-03  512: 4.2e-04  552: 1.6e-04  595: 5.2e-03  634: 9.4e-04  674: 1. 8e-03
+37  gi|56315919|  432   22.6  1.5E-07  8.6E-06   34.74%  3  hypothetical prote  112: 1.4e-03  152: 1.4e-05  281: 6.6e-03
+38  gi|68557156|  914   22.3  1.9E-07  1.1E-05   31.52%  5  regulatory protein  426: 9.4e-03  467: 5.2e-03  506: 1.2e-04  546: 5.7e-04  752: 2.5e-03
+39  gi|68553916|  925   20.8  5.6E-07  3.1E-05   17.47%  5  regulatory protein  514: 4.8e-03  551: 1.1e-04  593: 6.5e-03  633: 3.0e-04  673: 2.4e-04
+40  gi|77964419|  932   20.7  5.9E-07  3.3E-05   16.88%  5  ATP-dependent tran  522: 1.4e-04  561: 1.4e-02  604: 4.4e-04  644: 4.4e-04  684: 7.0e-04
+41  gi|68556571|  947   20.6  6.2E-07  3.5E-05   16.45%  4  regulatory protein  579: 2.0e-03  621: 3.4e-04  661: 3.7e-05  701: 5.2e-04
+42  gi|47572961|  896   19.8  1.1E-06  6.1E-05   11.63%  2  COG2909: ATP-depen  613: 8.7e-04  736: 1.3e-03
+43  gi|74024089|  809   19.4  1.4E-06  8.0E-05    9.76%  3  regulatory protein  449: 4.4e-05  491: 2.3e-04  531: 3.5e-04
+44  gi|78062060|  889   19.1  1.8E-06  1.0E-04    8.38%  3  ATP-dependent tran  629: 4.3e-03  714: 5.2e-04  752: 1.3e-04
+45  gi|47572956|  933   18.3  3.1E-06  1.7E-04    5.81%  4  COG2909: ATP-depen  649: 1.3e-06  689: 1.1e-02  732: 3.6e-02  772: 6.1e-04
+46  gi|67156504|  900   18.0  3.9E-06  2.2E-04    4.98%  2  regulatory protein  510: 6.7e-04  550: 8.3e-07
+47  gi|48781484|  922   17.1  7.0E-06  3.9E-04    3.31%  4  COG2909: ATP-depen  457: 5.1e-03  496: 2.1e-04  582: 7.4e-04  622: 2.3e-04
+48  gi|54022251| 1145   13.6  8.0E-05  4.5E-03    0.55%  4  putative serine/th  824: 9.7e-03  864: 8.5e-05  906: 5.7e-04  946: 2.5e-03
+49  gi|56476561|  895   10.2  8.4E-04  4.7E-02    0.08%  4  putative regulator  489: 9.2e-03  529: 1.4e-04  571: 1.0e-02  611: 3.5e-03
+50  gi|76260736|  890   10.1  9.1E-04  5.1E-02    0.07%  1  regulatory protein  745: 9.1e-04
+51  gi|9947737|g  901    9.4  1.5E-03  8.5E-02    0.05%  1  probable transcrip  624: 1.5e-03
+52  gi|15610217| 1110    8.1  3.6E-03  2.0E-01    0.02%  3  PROBABLE SERINE/TH  863: 1.7e-04  904: 4.3e-03  944: 8.2e-03
+53  gi|68553906|  914    7.3  6.3E-03  3.5E-01    0.01%  2  regulatory protein  582: 1.0e-03  621: 8.9e-04
+54  gi|73537679|  944    4.2  5.3E-02  3.0E+00    0.00%  2  regulatory protein  582: 3.0e-03  624: 2.9e-03
+55  gi|74016775|  955    2.1  2.3E-01  1.3E+01    0.00%  1  regulatory protein  592: 2.3e-01
+56  gi|68556570|  855    2.0  2.5E-01  1.4E+01    0.00%  1  regulatory protein  660: 2.5e-01
+
+______________________________

@@ -1,0 +1,96 @@
+protein_accession	sequence_MD5_digest	sequence_length	analysis	signature_accession	signature_description	start_location	stop_location	e-value	match_status	data	interpro_accession	interpro_description
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	1	378	3.2E-122	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	Pfam	PF18801	response regulator aspartate phosphatase H, N terminal	6	67	4.4E-27	T	23-09-2022	-	-
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	ProSiteProfiles	PS50005	TPR repeat profile.	222	255	10.7089	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	Coils	Coil	Coil	124	144	-	T	23-09-2022	-	-
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	PANTHER	PTHR10098	RAPSYN-RELATED	56	365	8.3E-18	T	23-09-2022	-	-
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	SUPERFAMILY	SSF48452	TPR-like	105	307	1.8E-19	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	Coils	Coil	Coil	28	51	-	T	23-09-2022	-	-
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	PANTHER	PTHR10098:SF106	RESPONSE REGULATOR ASPARTATE PHOSPHATASE G	56	365	8.3E-18	T	23-09-2022	-	-
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	SMART	SM00028	tpr_5	261	294	23	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	SMART	SM00028	tpr_5	222	255	0.0000074	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+RapA_[B._subtilis]	5b7fbcc1dfad43899d1df4d030097a34	378	Pfam	PF13424	Tetratricopeptide repeat	221	293	0.0000000026	T	23-09-2022	-	-
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	Pfam	PF01381	Helix-turn-helix	9	62	0.00000057	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	PANTHER	PTHR37038	TRANSCRIPTIONAL REGULATOR-RELATED	4	274	1.2E-63	T	23-09-2022	-	-
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	CDD	cd00093	HTH_XRE	6	62	0.00000000376388	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	ProSiteProfiles	PS50943	Cro/C1-type HTH domain profile.	9	62	11.087877	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	SMART	SM00530	mbf_short4	8	62	0.0012	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	TIGRFAM	TIGR01716	RGG_Cterm: transcriptional activator, Rgg/GadR/MutR family, C-terminal domain	66	274	6.5E-46	T	23-09-2022	IPR010057	Transcription activator MutR, C-terminal
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	4	63	1.72E-11	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	Gene3D	G3DSA:1.10.260.40	-	1	66	1.5E-12	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+Rgg2_[S._pyogenes]	60341e78edc7f76890d51e454e00137c	288	PANTHER	PTHR37038:SF12	TRANSCRIPTIONAL REGULATOR	4	274	1.2E-63	T	23-09-2022	-	-
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	PANTHER	PTHR37038	TRANSCRIPTIONAL REGULATOR-RELATED	1	275	1.3E-29	T	23-09-2022	-	-
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	1	279	0.000002	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	PANTHER	PTHR37038:SF12	TRANSCRIPTIONAL REGULATOR	1	275	1.3E-29	T	23-09-2022	-	-
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	1	63	9.6E-10	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	CDD	cd00093	HTH_XRE	4	60	0.0000339605	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+RopB_[S._pyogenes]	e087912c76ab110aa1a72faa68322ab3	280	TIGRFAM	TIGR01716	RGG_Cterm: transcriptional activator, Rgg/GadR/MutR family, C-terminal domain	62	278	1.3E-64	T	23-09-2022	IPR010057	Transcription activator MutR, C-terminal
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Pfam	PF01381	Helix-turn-helix	15	62	0.0000000011	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	7	65	8.16E-12	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SUPERFAMILY	SSF48452	TPR-like	136	353	4.43E-19	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	ProSiteProfiles	PS50943	Cro/C1-type HTH domain profile.	16	65	12.891456	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Coils	Coil	Coil	121	141	-	T	23-09-2022	-	-
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	CDD	cd00093	HTH_XRE	9	65	0.00000020375	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Gene3D	G3DSA:1.25.40.1000	-	65	166	2.4E-57	T	23-09-2022	-	-
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SMART	SM00530	mbf_short4	11	65	0.000000023	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	ProSiteProfiles	PS50005	TPR repeat profile.	270	303	9.9124	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Coils	Coil	Coil	321	341	-	T	23-09-2022	-	-
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	167	423	6.1E-107	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Pfam	PF13424	Tetratricopeptide repeat	234	302	1.3E-12	T	23-09-2022	-	-
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	Gene3D	G3DSA:1.10.260.40	-	5	64	5.2E-13	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SMART	SM00028	tpr_5	229	262	2.2	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SMART	SM00028	tpr_5	308	341	58	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SMART	SM00028	tpr_5	189	222	120	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+NprR_[B._thuringensis]	02f8b858b9d1df1865d4441b08f68309	423	SMART	SM00028	tpr_5	270	303	0.000099	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	Pfam	PF18768	RNPP family C-terminal domain	80	282	2.6E-59	T	23-09-2022	IPR041315	PlcR,  tetratricopeptide repeat
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	PANTHER	PTHR37038	TRANSCRIPTIONAL REGULATOR-RELATED	1	285	1.3E-122	T	23-09-2022	-	-
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	Pfam	PF01381	Helix-turn-helix	10	60	4.5E-10	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	1	285	2.8E-109	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	5	64	2.82E-12	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	SMART	SM00530	mbf_short4	9	63	4.7E-11	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	ProSiteProfiles	PS50943	Cro/C1-type HTH domain profile.	10	63	13.960915	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	CDD	cd00093	HTH_XRE	7	63	7.39315E-10	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	PANTHER	PTHR37038:SF14	TRANSCRIPTIONAL ACTIVATOR	1	285	1.3E-122	T	23-09-2022	-	-
+PlcR_[B._cereus]	f52cf11a2ed71a65ac17aa8c446390c0	285	SUPERFAMILY	SSF48452	TPR-like	155	255	0.0000000481	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	Pfam	PF01381	Helix-turn-helix	8	60	0.0000029	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	3	63	3.87E-13	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	SMART	SM00530	mbf_short4	7	61	0.000012	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	SUPERFAMILY	SSF48452	TPR-like	72	301	7.21E-87	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	Gene3D	G3DSA:1.10.260.40	-	1	67	1.4E-39	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	CDD	cd00093	HTH_XRE	5	61	0.0000183702	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+PrgX_[E._faecalis_plasmid]	8d0ebb3369881d9392c24c451706811a	317	Gene3D	G3DSA:1.25.40.400	-	68	301	7.8E-83	T	23-09-2022	-	-
+TraA_[E._faecalis_plasmid]	d085a8c7259650af909beb233baf4806	321	Gene3D	G3DSA:1.25.40.400	-	70	300	1.1E-51	T	23-09-2022	-	-
+TraA_[E._faecalis_plasmid]	d085a8c7259650af909beb233baf4806	321	SUPERFAMILY	SSF48452	TPR-like	75	305	3.3E-84	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+AimR_[B._phage_phi3T]	c6d13b76922f30fddafe401d86cf0d1c	378	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	109	354	0.0000005	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+AimR_[B._phage_phi3T]	c6d13b76922f30fddafe401d86cf0d1c	378	SUPERFAMILY	SSF48452	TPR-like	201	350	0.0000000307	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+AimR-like_[B._phage_Waukesha]	83aacf6388336350309228b3abd3ea77	395	Pfam	PF01381	Helix-turn-helix	31	65	0.0000099	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+AimR-like_[B._phage_Waukesha]	83aacf6388336350309228b3abd3ea77	395	CDD	cd00093	HTH_XRE	34	64	0.000865013	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+AimR-like_[B._phage_Waukesha]	83aacf6388336350309228b3abd3ea77	395	Coils	Coil	Coil	99	119	-	T	23-09-2022	-	-
+AimR-like_[B._phage_Waukesha]	83aacf6388336350309228b3abd3ea77	395	ProSiteProfiles	PS50943	Cro/C1-type HTH domain profile.	34	76	10.103194	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+AimR-like_[B._phage_Waukesha]	83aacf6388336350309228b3abd3ea77	395	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	16	66	0.00000816	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+AloR13_[P._polymyxa]	57a0e4399a86c299ab078ceb6f6831f1	467	SUPERFAMILY	SSF48452	TPR-like	115	409	0.0000835	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	Pfam	PF13181	Tetratricopeptide repeat	246	270	0.2	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	Pfam	PF13181	Tetratricopeptide repeat	329	360	0.000023	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	245	430	2.9E-14	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	CDD	cd00093	HTH_XRE	10	59	0.0000944643	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SMART	SM00028	tpr_5	207	240	240	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SMART	SM00028	tpr_5	168	201	99	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SMART	SM00028	tpr_5	245	278	2.2	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SMART	SM00028	tpr_5	128	161	53	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SMART	SM00028	tpr_5	327	360	0.0019	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SUPERFAMILY	SSF48452	TPR-like	109	280	1.9E-18	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	8	59	0.00000326	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	SUPERFAMILY	SSF48452	TPR-like	240	413	6.75E-18	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QsrB_[C._acetobutylicum]	d379c907ca9c065137e9798b3c4bf96a	435	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	76	244	1.8E-10	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SMART	SM00530	mbf_short4	12	66	0.00000022	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	CDD	cd00093	HTH_XRE	10	60	0.00000000157461	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	Coils	Coil	Coil	423	426	-	T	23-09-2022	-	-
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	Gene3D	G3DSA:1.25.40.10	Tetratricopeptide repeat domain	89	416	4E-17	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SUPERFAMILY	SSF48452	TPR-like	113	329	3.11E-11	T	23-09-2022	IPR011990	Tetratricopeptide-like helical domain superfamily
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SUPERFAMILY	SSF47413	lambda repressor-like DNA-binding domains	7	60	1.32E-11	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	ProSiteProfiles	PS50943	Cro/C1-type HTH domain profile.	13	68	13.288524	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	Pfam	PF01381	Helix-turn-helix	13	60	0.0000000054	T	23-09-2022	IPR001387	Cro/C1-type helix-turn-helix domain
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	Gene3D	G3DSA:1.10.260.40	-	7	64	3.4E-14	T	23-09-2022	IPR010982	Lambda repressor-like, DNA-binding domain superfamily
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SMART	SM00028	tpr_5	247	280	150	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SMART	SM00028	tpr_5	283	316	0.36	T	23-09-2022	IPR019734	Tetratricopeptide repeat
+QssR5_[C._saccharoperbutylacetonicum]	489b9826fed9c2177d7cf5aa9a1deca4	426	SMART	SM00028	tpr_5	209	242	0.074	T	23-09-2022	IPR019734	Tetratricopeptide repeat

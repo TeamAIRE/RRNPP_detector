@@ -1,0 +1,13 @@
+species	genome_id	genetic element	receptor	r_protein_id	r_locus_tag	cognate_propeptide	p_protein_id	p_locus_tag	reference	pubmed_id
+Bacillus cereus	NZ_CP034551.1	chromosome	PlcR	WP_000542912.1	EJ379_RS27345	PapR	WP_000734730.1	EJ379_RS27340	Neiditch et al. 2017	PMID: 28876981
+Bacillus phage phi3T	KY030782.1	bacteriophage	AimR	APD21232.1	phi3T_89	AimP	APD21233.1	phi3T_90	Sorek et al. 2017	PMID: 28099413
+Bacillus phage Waukesha	KJ920400.1	bacteriophage	AimR_like	AID50226.1	Waukesha92_37	AimP_like	AID50225.1	Waukesha92_36	Stokar-Avihail et al. 2019	PMID: 31071296
+Bacillus subtilis	NP_389125.1	chromosome	RapA	NP_389125.1	BSU_12430	PhrA	NP_389126.1	BSU_12440	Neiditch et al. 2017	PMID: 28876981
+Bacillus thuringensis	NZ_CM000747.1	chromosome	NprR	WP_001187960.1	BTHUR0002_RS02765	NprX	WP_000738910.1	BTHUR0002_RS32155	Neiditch et al. 2017	PMID: 28876981
+Clostridium acetobutylicum	AE001437.1	chromosome	QsrB	AAK78305.1	CA_C0324	QspB			Kotte et al. 2020	PMID: 32375981
+Clostridium saccharoperbutylacetonicum	CP004121.1	chromosome	QssR5	AGF59421.1	Cspa_c56960	QssP5	AGF59420.1	Cspa_c56950	Feng et al. 2020	PMID: 32411297
+Enterococcus faecalis	AY855841.2	plasmid	PrgX	AAA65845.1	prgX	PrgQ	AAA65846.1	prgQ	Neiditch et al. 2017	PMID: 28876981
+Enterococcus faecalis	D78016.1	plasmid	TraA	BAA11197.1	traA	IPD1	BAA11198.1	iPD1	Neiditch et al. 2017	PMID: 28876981
+Paenibacillus polymyxa	IMG: 23684	chromosome	AloR13	IMG: 2547357582	PPTDRAFT_04976	AloP13			Voichek et al. 2020	PMID: 32764104
+Streptococcus pyogenes	NZ_CP010450.1	chromosome	Rgg2	WP_002990747.1	SD90_RS02145	Shp2	WP_002990747.1	SD90_RS09265	Neiditch et al. 2017	PMID: 28876981
+Streptococcus pyogenes	CP036530.1	chromosome	RopB	QGU91291.1	EZY40_08045	Sip			Do et al. 2017	PMID: 28923955

@@ -1,0 +1,12 @@
+WARNING: unknown options '-m tpr2.8.pp'
+Nr.	Sequence	Len	Score	P-value	E-value	Probab	#	Description	pos:score ...
+1  	APD21157.1	 379	  54.4	 4.2E-17	 3.8E-16 	100.00%	 6	hypothetical protein phi3T_14 [Bacillus phage phi3T]	  100: 2.9e-03  140: 4.0e-04  181: 1.6e-05  221: 3.6e-08  263: 1.9e-03  337: 4.3e-03
+2  	ALA47936.1	 430	  21.6	 3.2E-07	 2.9E-06 	 24.03%	 3	putative DNA-binding protein [Brevibacillus phage Sundance]	  195: 9.3e-05  233: 5.2e-03  269: 1.5e-05
+3  	AGR47394.1	 425	  18.9	 2.0E-06	 1.8E-05 	  7.73%	 4	DNA binding protein [Brevibacillus phage Emery]	  127: 2.5e-04  162: 3.8e-02  204: 9.5e-03  246: 3.6e-05
+4  	AID50226.1	 395	  15.8	 1.7E-05	 1.5E-04 	  1.74%	 2	hypothetical protein Waukesha92_37 [Bacillus phage Waukesha92]	  211: 1.1e-05  252: 1.3e-03
+5  	ALO79924.1	 395	  15.8	 1.7E-05	 1.5E-04 	  1.74%	 2	DNA-binding helix-turn-helix protein [Bacillus phage phiS58]	  211: 1.1e-05  252: 1.3e-03
+6  	ANT39976.1	 384	  14.8	 3.4E-05	 3.1E-04 	  1.05%	 1	DNA-binding protein [Bacillus phage vB_BtS_BMBtp14]	  305: 3.4e-05
+7  	APD21232.1	 378	   9.9	 1.1E-03	 9.5E-03 	  0.07%	 2	arbitrium communication peptide receptor [Bacillus phage phi3T]	  287: 1.3e-04  324: 8.3e-03
+8  	ALF01611.1	 381	   5.3	 2.5E-02	 2.3E-01 	  0.00%	 1	DNA-binding protein [Bacillus phage vB_BtS_BMBtp16]	  304: 2.5e-02
+9  	AGV99457.1	 412	   0.5	 7.0E-01	 6.3E+00 	  0.00%	 1	HTH transcriptional regulator [Bacillus phage phiCM3]	  270: 7.0e-01
+
