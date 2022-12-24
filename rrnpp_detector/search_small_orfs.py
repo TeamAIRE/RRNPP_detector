@@ -111,7 +111,7 @@ def get_orfs(genomic_accession, strand, region_start, region_end, region_seq,
             # outfile.write('>' + coord_to_anno_pep[genomic_key] + ' ' + genomic_accession + '_[' + str(real_start) + '-' + str(real_end) + '](' + strand + 
             #               ')_Anchor=' + anchor_protein + '_RBS_bin=' + str(rbs_bin) + ';RBS_motif=' + rbs_motif + ';RBS_spacer=' + str(rbs_spacer) + '\n')
             # outfile.write(orf_seq + '\n')
-            break
+            # break
         
         # if orf has a relevant RBS, fill protein_dict, cognate_dict and pair_dict
         if rbs_bin in bins_allowed:
