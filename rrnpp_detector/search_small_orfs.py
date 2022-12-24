@@ -101,17 +101,17 @@ def get_orfs(genomic_accession, strand, region_start, region_end, region_seq,
         else:
             real_start = start + region_start
             real_end = stop + region_start - 1 + 3 # (+3 for stop codon)
-        # genomic_key = genomic_accession + '_' + strand + '_' + str(real_start) + '_' + str(real_end)
-        # # if detected small orf already is annotated, don't print it in fasta
-        # # Store nonetheless the RBS values in protein dict
-        # if genomic_key in coord_to_anno_pep:
-        #     protein_dict[coord_to_anno_pep[genomic_key]]['RBS_bin'] = None
-        #     protein_dict[coord_to_anno_pep[genomic_key]]['RBS_spacer'] = None
-        #     protein_dict[coord_to_anno_pep[genomic_key]]['RBS_motif'] = None
-        #     # outfile.write('>' + coord_to_anno_pep[genomic_key] + ' ' + genomic_accession + '_[' + str(real_start) + '-' + str(real_end) + '](' + strand + 
-        #     #               ')_Anchor=' + anchor_protein + '_RBS_bin=' + str(rbs_bin) + ';RBS_motif=' + rbs_motif + ';RBS_spacer=' + str(rbs_spacer) + '\n')
-        #     # outfile.write(orf_seq + '\n')
-        #     # break
+        genomic_key = genomic_accession + '_' + strand + '_' + str(real_start) + '_' + str(real_end)
+        # if detected small orf already is annotated, don't print it in fasta
+        # Store nonetheless the RBS values in protein dict
+        if genomic_key in coord_to_anno_pep:
+            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_bin'] = None
+            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_spacer'] = None
+            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_motif'] = None
+            # outfile.write('>' + coord_to_anno_pep[genomic_key] + ' ' + genomic_accession + '_[' + str(real_start) + '-' + str(real_end) + '](' + strand + 
+            #               ')_Anchor=' + anchor_protein + '_RBS_bin=' + str(rbs_bin) + ';RBS_motif=' + rbs_motif + ';RBS_spacer=' + str(rbs_spacer) + '\n')
+            # outfile.write(orf_seq + '\n')
+            # break
         
         # if orf has a relevant RBS, fill protein_dict, cognate_dict and pair_dict
         if rbs_bin in bins_allowed:
