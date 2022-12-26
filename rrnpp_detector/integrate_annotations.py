@@ -307,7 +307,7 @@ def test_annotation_file(annotation_file, annotation_format, out_dir):
         test_feature_tbl(test_file)
         
 
-def split_annotation_file(annotation_file, annotation_format, out_dir):
+def split_annotation_file(annotation_file, annotation_format, out_dir, chunk_size):
     if annotation_format == 'gff':
         extension = '.gff'
     elif annotation_format == 'feature_tbl':
@@ -315,18 +315,25 @@ def split_annotation_file(annotation_file, annotation_format, out_dir):
     old_seq_id = ''
     list_seq_ids = list()
     with open(annotation_file, mode = 'r') as infile:
+        chunk_counter = 1
+        contig_counter = 0
         for line in infile:
             if line[0] != '#':
                 if annotation_format == 'gff':
                     seq_id = line.split('\t', 1)[0]
                 elif annotation_format == 'feature_tbl':
                     seq_id = line.split('\t', 7)[6]
+                if chunk_counter == 1 and contig_counter == 0:
+                    outfile = open(os.path.join(out_dir, 'chunk_' + str(chunk_counter) + extension), mode = 'w')  
                 if seq_id != old_seq_id:
                     list_seq_ids.append(seq_id)
-                    if old_seq_id != '':
-                        outfile.close()
-                    outfile = open(os.path.join(out_dir, seq_id + extension), mode = 'w')
+                    contig_counter += 1
                     old_seq_id = seq_id
+                if contig_counter > chunk_size:
+                    chunk_counter += 1
+                    outfile.close()
+                    outfile = open(os.path.join(out_dir, 'chunk_' + str(chunk_counter) + extension), mode = 'w')
+                    contig_counter = 1
                 outfile.write(line)
     infile.close()
     outfile.close()

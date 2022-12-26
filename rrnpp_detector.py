@@ -30,8 +30,8 @@ def main():
     parser.add_argument('--ft', dest='feature_tbl', type=str, help='path to the annotations of the target genome(s) in the NCBI_assembly feature_table format')
     # Run options
     parser.add_argument('--cpu', dest='cpu', type=str, default='1', help='number of cpu to use (default is 1)')
-    parser.add_argument('--preserve_ram', action='store_true', help='minimize RAM usage at the expense of speed '
-                        '(will process target genomes one by one instead of all together)')
+    parser.add_argument('--chunk_size', dest='chunk_size', help='nb target genomes to be processed altogether to preserve RAM usage '
+                        '(e.g. if --chunk_size 100, then the program will process 100 genomes by 100 genomes instead of all together)')
     parser.add_argument('--keep_working_dir', action='store_true', help='keep the directory of intermediate files')
     # Search options
     parser.add_argument('--min_pl',  dest='min_propeptide_len', default='10',  help='minimal propeptide length (default=10)')
@@ -40,9 +40,13 @@ def main():
     parser.add_argument('--max_rl',  dest='max_receptor_len',   default='500', help='maximal receptor length (default=500)')
     parser.add_argument('--min_igd', dest='min_intergen_dist',  default='-60', help='minimal intergenic distance (default=-60)')
     parser.add_argument('--max_igd', dest='max_intergen_dist',  default='400', help='maximal intergenic distance (default=400)')
+    parser.add_argument('--start_codons', dest='start_codons', default='ATG', help='comma-separated list of start codons to consider for ORF calling (default=ATG)')
+    parser.add_argument('--rbs_bins', dest='rbs_bins', default='27,24,23,22,20,19,16,15,14,13,12,6', help='comma-separated list of Prodigal\'s RBS bins to consider for ORF calling '
+                        '(default=27,24,23,22,20,19,16,15,14,13,12,6), '
+                        'to by bypass the filter, use --rbs_bins 27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0')
     parser.add_argument('--expand_to_homologs', action='store_true', help='use detected systems as seeds to detect putative homologous systems missed by RRNPP_detector')
     parser.add_argument('--tprpred', dest='tprpred', action='store_true', help='run tprpred in addition to hmmsearch for TPR motifs detection')
-    parser.add_argument('--predisi', dest='predisi', action='store_true', help='run predisi in addition to signalp for detection of propeptides with a signal sequence (warning: this increases the risk of false positives)')
+    parser.add_argument('--predisi', dest='predisi', action='store_true', help='run predisi in addition to signalp for the detection of a secretion-tag within propeptides')
 
     args = parser.parse_args()
     rrnpp_detector_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
