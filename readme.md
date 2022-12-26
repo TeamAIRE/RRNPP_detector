@@ -79,16 +79,17 @@ usage: rrnpp_detector.py [-h] [--version] [-o OUT_DIR] [--fna FNA] [--faa FAA] [
 RRNPP_detector: a tool to detect RRNPP-Type quorum sensing systems in chromosomes, plasmids and bacteriophages of Firmicutes
 
 Main arguments
- -h, --help            show this help message and exit
-  --version             print version number and exit.
-  -o OUT_DIR            path to output directory (default is current directory)
-  --fna FNA             path to the fasta of the target genome(s) (will run Prodigal to detect CDSs if faa not provided)
-  --faa FAA             path to fasta of the protein sequences of the target genome(s) (requires additional --gff or --ft option)
-  --gff GFF             path to the annotations of the target genome(s) in gff
-  --ft FEATURE_TBL      path to the annotations of the target genome(s) in the NCBI_assembly feature_table format
-  --cpu CPU             number of cpu to use (default is 1)
-  --preserve_ram        minimize RAM usage at the expense of speed (will process target genomes one by one instead of all together)
-  --keep_working_dir    keep the directory of intermediate files
+ -h, --help               show this help message and exit
+  --version               print version number and exit.
+  -o OUT_DIR              path to output directory (default is current directory)
+  --fna FNA               path to the fasta of the target genome(s) (will run Prodigal to detect CDSs if faa not provided)
+  --faa FAA               path to fasta of the protein sequences of the target genome(s) (requires additional --gff or --ft option)
+  --gff GFF               path to the annotations of the target genome(s) in gff
+  --ft FEATURE_TBL        path to the annotations of the target genome(s) in the NCBI_assembly feature_table format
+  --cpu CPU               number of cpu to use (default is 1)
+  --chunk_size CHUNK_SIZE nb target genomes to be processed altogether to preserve RAM usage 
+                          (e.g. if --chunk_size 100, then the program will process 100 genomes by 100 genomes instead of all together)
+  --keep_working_dir      keep the directory of intermediate files
 
 Specific optional parameters for searching RRNPP systems
   --min_pl  MIN_PROPEPTIDE_LEN  minimal propeptide length (default=10)
@@ -97,6 +98,9 @@ Specific optional parameters for searching RRNPP systems
   --max_rl  MAX_RECEPTOR_LEN    maximal receptor length (default=500)
   --min_igd MIN_INTERGEN_DIST   minimal intergenic distance (default=-20)
   --max_igd MAX_INTERGEN_DIST   maximal intergenic distance (default=400)
+  --start_codons START_CODONS   comma-separated list of start codons to consider for ORF calling (default=ATG)
+  --rbs_bins RBS_BINS           comma-separated list of Prodigal's RBS bins to consider for ORF calling (default=27,24,23,22,20,19,16,15,14,13,12,6), 
+                                to by bypass the filter, use --rbs_bins 27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
   --expand_to_homologs          use detected systems as seeds to detect putative homologous systems missed by RRNPP_detector
   --tprpred                     run tprpred in addition to hmmsearch for TPR motifs detection
   --predisi                     run predisi in addition to signalp for detection of propeptides with a signal sequence (warning: this increases the risk of false positives)
@@ -182,6 +186,14 @@ python rrnpp_detector.py --fna "$DOWNLOAD_DIRECTORY"/viral_genomes.fna --faa "$D
 If you have suggestions to improve the tool or would like to report bugs, please post your message on the Issues section of this repository.
 
 ## 7. Historic of versions
+
+### v1.1.0
+* RAM Usage:
+  - the ```--chunk_size``` option has been introduced, which enables to divide the target dataset into chunks of N genomes in an effort to preserve RAM usage. 
+
+* Search options:
+  - the ```--rbs_bins``` and ```start_codons``` options have been introduced, which enables to explictily specify the Prodigal's RBS bins and and start codons to consider for the detection of small ORFs encoded in the vicinity of candidate receptors 
+
 
 ### v1.0.0
 * Receptor detection: 
