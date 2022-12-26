@@ -10,6 +10,7 @@ import os
 import pandas
 import sys
 import shutil
+from math import ceil
 from rrnpp_detector.filter import filter_by_length, filter_by_adjacency, subset_by_id, setdiff, get_only_partners
 from rrnpp_detector.integrate_annotations import split_annotation_file, gff_to_dict, feature_tbl_to_dict, explicitize_duplicates
 from rrnpp_detector.wrappers import hmmsearch, tprpred, signalp, predisi, blastp
@@ -83,24 +84,28 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
     ###############################################################################################
     # Determine whether contigs should be processed altogether or one at a time
     ###############################################################################################
-    if args.preserve_ram:
+    if args.chunk_size:
         # Split gff or feature table based on nucleotide sequence id (different genomes, chromosomes, plasmids etc...)
-        print('* Split %s into as many files as there are target genetic elements (contigs, genomes, chromosomes, plasmids ...)' % annotation_format)
-        list_contigs = split_annotation_file(annotation_file, annotation_format, working_dir)
+        print('* Split %s into chunks of %s genomes' % (annotation_format, args.chunk_size))
+        list_contigs = split_annotation_file(annotation_file, annotation_format, working_dir, int(args.chunk_size))
         print('  %d contig(s) identified in the %s' % (len(list_contigs), annotation_format))
-        max_iterations = len(list_contigs)  
+        max_i = len(list_contigs)
+        increment = int(args.chunk_size)
+         
     else:
-        max_iterations = 1
-        contig = ""
+        max_i = 1
+        increment = 1
     
     smORF_counter = 0
     qss_counter = 0
-    for i in range(0, max_iterations):
-        if args.preserve_ram:
+    iteration = 0
+    for i in range(0, max_i, increment):
+        iteration += 1
+        if args.chunk_size:
             contig = list_contigs[i]
             print('############################################################')
-            print('* Processing contig/genetic_element %d/%d: %s' % (i+1, max_iterations, contig))
-            working_dir = os.path.join(initial_working_dir, contig)
+            print('* Processing chunk %d starting from genome %d/%d: %s' % (iteration, i+1, len(list_contigs), contig))
+            working_dir = os.path.join(initial_working_dir, 'chunk_' + str(iteration))
             os.makedirs(working_dir)
         
         ###########################################################################################
@@ -108,13 +113,13 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         ###########################################################################################
         print('* Storing annotated ORFs into python dictionaries ...')
         if annotation_format == 'gff':
-            if args.preserve_ram:
-                duplicates, position_dict, protein_dict = gff_to_dict(os.path.join(initial_working_dir, contig + '.gff'))
+            if args.chunk_size:
+                duplicates, position_dict, protein_dict = gff_to_dict(os.path.join(initial_working_dir, 'chunk_' + str(iteration) + '.gff'))
             else:
                 duplicates, position_dict, protein_dict = gff_to_dict(annotation_file)
         elif annotation_format == 'feature_tbl':
-            if args.preserve_ram:
-                duplicates, position_dict, protein_dict = feature_tbl_to_dict(os.path.join(initial_working_dir, contig + '.tsv'))
+            if args.chunk_size:
+                duplicates, position_dict, protein_dict = feature_tbl_to_dict(os.path.join(initial_working_dir, 'chunk_' + str(iteration) + '.tsv'))
             else:
                 duplicates, position_dict, protein_dict = feature_tbl_to_dict(annotation_file)
         
@@ -159,21 +164,23 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         # If small orf search possible: 
         #    it is not prohibitive to have no potential annotated propeptides at this stage
         ###########################################################################################
-        if args.preserve_ram:
+        if args.chunk_size:
             # Intersect list of all small proteins with list of proteins encoded by the current genetic element (same rationale for receptors)
             if same_len_as_propeptides:
                 annotated_candidate_propeptides = list(set.intersection(set(list(protein_dict.keys())), set(same_len_as_propeptides)))
                 if not search_small_orfs:
                     if not annotated_candidate_propeptides:
-                        print('  Skip current genetic element: no proteins of length compatible with that of propeptides')
+                        print('  Skip current chunk: no proteins of length compatible with that of propeptides')
                         continue
-                propeptides_faa = os.path.join(working_dir, '0_same_len_as_propeptides_in_contig.faa')
+                propeptides_faa = os.path.join(working_dir, '0_same_len_as_propeptides_in_chunk.faa')
                 subset_by_id(same_len_as_propeptides_faa, propeptides_faa, annotated_candidate_propeptides)
             candidate_receptors = list(set.intersection(set(list(protein_dict.keys())), set(same_len_as_receptors)))
             if not candidate_receptors:
-                print('  Skip current genetic element: no proteins of length compatible with that of receptors')
+                #print(same_len_as_receptors)
+                print(protein_dict.keys())
+                print('  Skip current chunk: no proteins of length compatible with that of receptors')
                 continue
-            receptors_faa = os.path.join(working_dir, '0_same_len_as_receptors_in_contig.faa')
+            receptors_faa = os.path.join(working_dir, '0_same_len_as_receptors_in_chunk.faa')
             subset_by_id(same_len_as_receptors_faa, receptors_faa, candidate_receptors)
         else:
             if same_len_as_propeptides:
@@ -224,8 +231,8 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
             if not search_small_orfs:
                 candidate_receptors = tmp_receptors
                 if not annotated_candidate_propeptides or not candidate_receptors:
-                    if args.preserve_ram:
-                        print('  Skip current genetic element: no proteins passed the filter')
+                    if args.chunk_size:
+                        print('  Skip current chunk: no proteins passed the filter')
                         continue
                     else:
                         sys.exit('  End of execution: no proteins passed the filter')
@@ -280,8 +287,8 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
                 tpr_df = pandas.concat([tpr_df, tprpred_df])
                 subset_by_id(input_receptors_faa, receptors_faa, candidate_receptors + candidate_rggs)
         if not candidate_receptors and not candidate_rggs:
-            if args.preserve_ram:
-                print('  Skip current genetic element: no potential receptors passed the filter')
+            if args.chunk_size:
+                print('  Skip current chunk: no potential receptors passed the filter')
                 continue
             else:
                 sys.exit('  End of execution: no proteins passed the filter')
@@ -301,8 +308,8 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         tmp_rggs, annotated_candidate_shps = get_only_partners(candidate_rggs, cognate_dict)
         if not search_small_orfs:
             if not annotated_candidate_propeptides and not annotated_candidate_shps:
-                if args.preserve_ram:
-                    print('  Skip current genetic element: no proteins passed the filter')
+                if args.chunk_size:
+                    print('  Skip current chunk: no proteins passed the filter')
                     continue
                 else:
                     sys.exit('  End of execution: no proteins passed the filter')
@@ -342,8 +349,8 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
                 smORF_counter, unannotated_candidate_shps = sprat(smORF_counter, fna, shps_faa, candidate_rggs, annotated_candidate_shps, parameters, working_dir, protein_dict, position_dict, pair_dict, cognate_dict)
                 candidate_shps += unannotated_candidate_shps
             if not candidate_propeptides and not candidate_shps:
-                if args.preserve_ram:
-                    print('  Skip current genetic element: no potential propeptides identified')
+                if args.chunk:
+                    print('  Skip current chunk: no potential propeptides identified')
                     continue
                 else:
                     sys.exit('  End of execution: no potential propeptides identified')
@@ -534,7 +541,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         qss_counter += len(loose_df)
         
         if contig:
-            suffix_faa = "__" + contig
+            suffix_faa = "__chunk_" + str(iteration)
         else:
             suffix_faa = ""
         if strict_receptors:
@@ -588,8 +595,8 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
     if args.expand_to_homologs and query_receptors:
         print('############################################################')
         print("* Expansion to undetected homologs")
-        if args.preserve_ram:
-            sys.exit("  Expansion to homologs is not yet available in preserve_ram mode")
+        if args.chunk_size:
+            sys.exit("  Expansion to homologs is not yet available when target genomes are not processed altogether")
         query_receptors_faa = os.path.join(initial_working_dir, "query_receptors_for_iterative_search.faa")
         target_receptors_faa = os.path.join(initial_working_dir, "target_blastdb_of_receptors_for_iterative_search.faa")
         subset_by_id(same_len_as_receptors_faa, query_receptors_faa, query_receptors, target_receptors_faa)
@@ -640,5 +647,5 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         subset_by_id(target_receptors_faa, os.path.join(expansion_dir, "homologuous_receptors_adjacent_to_homologous_propeptides.faa"), expansion_df['homologous_receptor'].unique().tolist())
 
     if not args.keep_working_dir:
-        shutil.rmtree(working_dir)
+        shutil.rmtree(initial_working_dir)
     print('Completed!')

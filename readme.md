@@ -192,7 +192,7 @@ If you have suggestions to improve the tool or would like to report bugs, please
   - the ```--chunk_size``` option has been introduced, which enables to divide the target dataset into chunks of N genomes in an effort to preserve RAM usage. 
 
 * Search options:
-  - the ```--rbs_bins``` and ```start_codons``` options have been introduced, which enables to explictily specify the Prodigal's RBS bins and and start codons to consider for the detection of small ORFs encoded in the vicinity of candidate receptors 
+  - the ```--rbs_bins``` and ```start_codons``` options have been introduced, which enable to explictily specify the RBS motifs and start codons to consider for the detection of small ORFs encoded in the vicinity of candidate receptors 
 
 
 ### v1.0.0

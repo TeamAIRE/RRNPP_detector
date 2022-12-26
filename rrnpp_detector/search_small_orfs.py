@@ -71,21 +71,23 @@ def get_orfs(genomic_accession, strand, region_start, region_end, region_seq,
              min_orf_len, max_orf_len, start_codons, rbs_regex, bins_allowed, 
              orf_counter, pair_id, anchor_protein, outfile, non_annotated_peptides,
              pair_dict, cognate_dict, coord_to_anno_pep, protein_dict):
-    orfs_coodinates = list()
+    orfs_coordinates = list()
     for start, stop, s, d in orfipy_core.orfs(region_seq, minlen = min_orf_len, maxlen = max_orf_len, starts = start_codons, strand = 'f'):
         orf_seq = region_seq[start:stop]
-        orfs_coodinates.append([start, stop])
+        
+        orfs_coordinates.append([start, stop])
         n = len(orf_seq)
         # get nested orfs
         for i in range(3, n, 3):
             if orf_seq[i:3] in start_codons and (n-i) >= min_orf_len:
-                orfs_coodinates.append([i+start, stop])
+                orfs_coordinates.append([i+start, stop])
                 
-    for orf in orfs_coodinates:
+    for orf in orfs_coordinates:
         orf_id = 'smallORF' + str(orf_counter)
         start, stop = orf[0], orf[1]
         orf_seq = region_seq[start:stop]
         
+
         # search RBS
         upstream_start = start - 21
         upstream_stop = start
@@ -101,17 +103,13 @@ def get_orfs(genomic_accession, strand, region_start, region_end, region_seq,
         else:
             real_start = start + region_start
             real_end = stop + region_start - 1 + 3 # (+3 for stop codon)
+            
         genomic_key = genomic_accession + '_' + strand + '_' + str(real_start) + '_' + str(real_end)
         # if detected small orf already is annotated, don't print it in fasta
         # Store nonetheless the RBS values in protein dict
         if genomic_key in coord_to_anno_pep:
-            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_bin'] = None
-            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_spacer'] = None
-            protein_dict[coord_to_anno_pep[genomic_key]]['RBS_motif'] = None
-            # outfile.write('>' + coord_to_anno_pep[genomic_key] + ' ' + genomic_accession + '_[' + str(real_start) + '-' + str(real_end) + '](' + strand + 
-            #               ')_Anchor=' + anchor_protein + '_RBS_bin=' + str(rbs_bin) + ';RBS_motif=' + rbs_motif + ';RBS_spacer=' + str(rbs_spacer) + '\n')
-            # outfile.write(orf_seq + '\n')
-            break
+            continue
+
         
         # if orf has a relevant RBS, fill protein_dict, cognate_dict and pair_dict
         if rbs_bin in bins_allowed:
