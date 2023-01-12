@@ -191,7 +191,7 @@ If you have suggestions to improve the tool or would like to report bugs, please
 ### v1.1.0
 * Receptor detection:
   - A filter of >65% coverage of the query HMM has been introduced to minimize false positives
-  - The additional Com_TPR (PF18710) HMM has been included within the library of HMMs of TPRs
+  - The Com_TPR (PF18710) HMM has been added to the library of HMMs for TPRs
 
 * RAM Usage:
   - the ```--chunk_size``` option has been introduced, which enables to divide the target dataset into chunks of N genomes in an effort to preserve RAM usage. 
