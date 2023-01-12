@@ -15,7 +15,8 @@ def load_parameters(args):
     parameters['propeptide_len_boundaries'] = [int(args.min_propeptide_len), int(args.max_propeptide_len)]
     parameters['receptor_len_boundaries'] = [int(args.min_receptor_len), int(args.max_receptor_len)]
     parameters['intergenic_distance_boundaries'] = [int(args.min_intergen_dist), int(args.max_intergen_dist)]
-    parameters['hmmsearch_max_evalue'] = 1E-4
+    parameters['hmmsearch_max_evalue'] = 1E-5
+    parameters['hmmsearch_min_pcover'] = 65
     parameters['tprpred_min_probab'] = 10
     parameters['predisi_min_likelihood'] = 0.3
     parameters['blastp_max_evalue'] = 1E-5
@@ -28,10 +29,12 @@ def load_parameters(args):
     parameters['blastp_min_pident_iterative_search_propeptides'] = 25
     parameters['blastp_min_pcover_iterative_search_propeptides'] = 50
     # parameters['orfipy_start_codons'] = ['ATG', 'GTG', 'TTG']
-    parameters['orfipy_start_codons'] = ['ATG']
+    # parameters['orfipy_start_codons'] = ['ATG']
+    parameters['orfipy_start_codons'] = args.start_codons
     # parameters['allowed_rbs_bins'] = [i for i in range(27, -1, -1)]
-    parameters['allowed_rbs_bins'] = [27, 24, 23, 22, 20, 19, 16, 15, 14, 13, 12, 6]
-    parameters['most_used_rbs_bins'] = [27, 24, 22, 19, 16, 15, 14, 13, 12, 6] # defined according to Omotajo et al.
+    # parameters['allowed_rbs_bins'] = [27, 24, 23, 22, 20, 19, 16, 15, 14, 13, 12, 6]
+    parameters['allowed_rbs_bins'] = args.rbs_bins
+    parameters['most_used_rbs_bins'] = [27, 24, 23, 22, 20, 19, 16, 15, 14, 13, 12, 6] # defined according to Omotajo et al.
     parameters['strict_contexts'] = ['(====> =>)', '(<= <====)', '(<= ====>)', '(<==== =>)'] # divergent + co-directional with peptide downstream of receptor
     parameters['strict_predictors'] = ['SP(Sec/SPI)', 'SHP_propeptide']
     parameters['relaxed_predictors'] = ['SP(Sec/SPI)', 'SHP_propeptide', 'LIPO(Sec/SPII)', 'TAT(Tat/SPI)', 'PrediSi_pos', 'PrediSi_neg_(but_high_score)']
