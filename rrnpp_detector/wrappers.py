@@ -44,16 +44,17 @@ def tblout_to_tsv(tblout, tsv, header, nb_field_separators):
 
 
 # for each protein matched (evalue <= max_evalue), keep only the info of the hmm that gave rise to the best evalue
-def filter_hmmsearch_results(tsv, max_evalue):
-    useful_column_names = ['target_name', 'hmm_name', 'hmm_accession', 'E-value', 'score']
-    column_types = {'target_name': str, 'hmm_name': str, 'hmm_accession': str, 'E-value': float, 'score': float}
+def filter_hmmsearch_results(tsv, max_evalue, min_pcover):
+    useful_column_names = ['target_name', 'hmm_name', 'hmm_accession', 'hmm_len', 'E-value', 'score', 'hmm_start', 'hmm_end']
+    column_types = {'target_name': str, 'hmm_name': str, 'hmm_accession': str, 'hmm_len': int, 'E-value': float, 'score': float, 'hmm_start': int, 'hmm_end': int}
     df = pandas.read_csv(tsv, sep='\t', usecols=useful_column_names, dtype=column_types)
-    df = df.loc[df['E-value'] <= max_evalue]
+    df['hmm_coverage'] = round((df['hmm_end'] - df['hmm_start'] + 1) / df['hmm_len'] * 100, 1)
+    df = df.loc[(df['E-value'] <= max_evalue) & (df['hmm_coverage'] >= min_pcover)]
     df = df.sort_values(by='E-value', ascending=True, kind='mergesort').drop_duplicates(subset=['target_name']) 
     return df     
 
 
-def hmmsearch(faa, hmm_library, stdout, tblout, domtblout, cpu, max_evalue):
+def hmmsearch(faa, hmm_library, stdout, tblout, domtblout, cpu, max_evalue, min_pcover):
     hmmsearch_args = ['hmmsearch', '--cpu', cpu, '--tblout', tblout, 
                       '--domtblout', domtblout,'-o', stdout, hmm_library, faa]
     subprocess.run(hmmsearch_args, check = True)
@@ -67,16 +68,16 @@ def hmmsearch(faa, hmm_library, stdout, tblout, domtblout, cpu, max_evalue):
     tblout_to_tsv(tblout, tblout[:-4] + '.tsv', header, nb_tabs)
     
     header = ('target_name\ttgt_accession\ttgt_len\thmm_name\thmm_accession\thmm_len\t'
-              'fullseq_E-value\tfull_seq_score\tfull_seq_bias\t'
+              'E-value\tscore\tfull_seq_bias\t'
               'domain_nb\ttotal_nb_domains\tc-Evalue\ti-Evalue\tdomain_score\tdomain_bias\t'
               'hmm_start\thmm_end\ttgt_start\ttgt_end\tenv_start\tenv_end\tacc\tdescription_of_target\n')
     nb_tabs = len(header.split('\t'))-1
     tblout_to_tsv(domtblout, domtblout[:-4] + '.tsv', header, nb_tabs)
     
-    results_df = filter_hmmsearch_results(tblout[:-4] + '.tsv', max_evalue)
+    results_df = filter_hmmsearch_results(domtblout[:-4] + '.tsv', max_evalue, min_pcover)
 
     # return results_df[['target_name', 'hmm_name', 'hmm_accession', 'E-value', 'score']]
-    return results_df[['target_name', 'hmm_name', 'hmm_accession', 'E-value', 'score']]
+    return results_df[['target_name', 'hmm_name', 'hmm_accession', 'hmm_coverage', 'E-value', 'score']]
 
 
 #######################################
