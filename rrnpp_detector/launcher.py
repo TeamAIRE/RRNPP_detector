@@ -90,11 +90,11 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         list_contigs = split_annotation_file(annotation_file, annotation_format, working_dir, int(args.chunk_size))
         print('  %d contig(s) identified in the %s' % (len(list_contigs), annotation_format))
         max_i = len(list_contigs)
-        increment = int(args.chunk_size)
-         
+        increment = int(args.chunk_size)   
     else:
         max_i = 1
         increment = 1
+        contig = None
     
     smORF_counter = 0
     qss_counter = 0
@@ -263,7 +263,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
                            os.path.join(working_dir, 'hmmsearch_TPRs_stdout.txt'),
                            os.path.join(working_dir, 'hmmsearch_TPRs_tblout.txt'),
                            os.path.join(working_dir, 'hmmsearch_TPRs_domtblout.txt'),
-                           args.cpu, parameters['hmmsearch_max_evalue'])
+                           args.cpu, parameters['hmmsearch_max_evalue'], parameters['hmmsearch_min_pcover'])
         # Receptors from the Rgg-RopB family are characterized by the TIGR01716 hmm"
         candidate_rggs = tpr_df.loc[(tpr_df['hmm_name'] == 'TIGR01716')]['target_name'].tolist()
         candidate_receptors = setdiff(tpr_df['target_name'].tolist(), candidate_rggs)
@@ -387,7 +387,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
                           os.path.join(working_dir, 'hmmsearch_HTH_stdout.txt'),
                           os.path.join(working_dir, 'hmmsearch_HTH_tblout.txt'),
                           os.path.join(working_dir, 'hmmsearch_HTH_domtblout.txt'),
-                          args.cpu, parameters['hmmsearch_max_evalue'])
+                          args.cpu, parameters['hmmsearch_max_evalue'], parameters['hmmsearch_min_pcover'])
         print('  %d potential receptors with a detected DNA binding domain' % len(tf_df))
         print('  Homology assessment to experimentally-validated receptors with Blastp ...')
         blast_df = blastp(os.path.join(rrnpp_detector_dir, 'data', 'fasta', 'ref_receptors.faa'), receptors_faa, working_dir, args.cpu, 
@@ -415,7 +415,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
                                    os.path.join(working_dir, 'hmmsearch_SHP_stdout.txt'),
                                    os.path.join(working_dir, 'hmmsearch_SHP_tblout.txt'),
                                    os.path.join(working_dir, 'hmmsearch_SHP_domtblout.txt'),
-                                   args.cpu, parameters['hmmsearch_max_evalue'])
+                                   args.cpu, parameters['hmmsearch_max_evalue'], 35)
             shps = tmp_shp_df['target_name'].tolist()
             shps, rggs = get_only_partners(shps, cognate_dict)
             permissive_rggs = setdiff(candidate_rggs, rggs)
@@ -532,7 +532,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         # tat_df = tmp_df.loc[tmp_df['Prediction'] == 'TAT(Tat/SPI)']
         # best_rbs_df = tmp_df.loc[tmp_df['Prediction'] != 'TAT(Tat/SPI)'].sort_values(by='p_RBS_bin', ascending=False, kind='mergesort').drop_duplicates(subset=['receptor_id'])
         loose_df_a = tmp_df.loc[tmp_df.propeptide_id.str[0:8] != "smallORF"]
-        loose_df_b = tmp_df.loc[tmp_df['p_RBS_bin'].isin(parameters['most_used_rbs_bins'])].sort_values(by='p_RBS_bin', ascending=False, kind='mergesort').drop_duplicates(subset=['receptor_id'])
+        loose_df_b = tmp_df.loc[tmp_df['p_RBS_bin'].isin(parameters['allowed_rbs_bins'])].sort_values(by='p_RBS_bin', ascending=False, kind='mergesort').drop_duplicates(subset=['receptor_id'])
         loose_df = pandas.concat([loose_df_a, loose_df_b])
         # loose_df = pandas.concat([tat_df, best_rbs_df])
         loose_df = loose_df.assign(qss_id=range(qss_counter, qss_counter + len(loose_df)))
