@@ -99,8 +99,8 @@ def make_summary(tpr_df, tf_df, blast_df, signalp_df, protein_dict, cognate_dict
     signalp_df.to_csv('propeptides_summary.tsv', sep='\t', header=True, index=False, mode='w')
     
     # receptor part
-    tpr_df = tpr_df.rename(columns={'hmm_name': 'TPR_hmm_name', 'hmm_accession': 'TPR_hmm_accession', 'E-value': 'TPR_hmm_evalue'})
-    tf_df = tf_df.rename(columns={'hmm_name': 'DNA-bd_hmm_name', 'hmm_accession': 'DNA-bd_hmm_accession', 'E-value': 'DNA-bd_hmm_evalue'})
+    tpr_df = tpr_df.rename(columns={'hmm_name': 'TPR_hmm_name', 'hmm_accession': 'TPR_hmm_accession', 'E-value': 'TPR_hmm_evalue', 'hmm_coverage': 'TPR_hmm_coverage'})
+    tf_df = tf_df.rename(columns={'hmm_name': 'HTH_hmm_name', 'hmm_accession': 'HTH_hmm_accession', 'E-value': 'HTH_hmm_evalue', 'hmm_coverage': 'HTH_hmm_coverage'})
     temp_df = pandas.merge(tpr_df.drop('score', axis=1), tf_df.drop('score', axis=1), how='left', left_on='target_name', right_on='target_name')
     receptors_df = pandas.merge(temp_df, blast_df, how='left', left_on='target_name', right_on='target_name')
     receptors_df = receptors_df.rename(columns={'target_name': 'receptor_id'})
