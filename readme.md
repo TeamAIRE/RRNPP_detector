@@ -61,7 +61,8 @@ tar -xvzf signalp-5.0b.tar.gz
 
 # optional: if you intend to use Predisi in addition to SignalP
 cd predisi
-javac JSPP.java 
+javac JSPP.java
+cd ../
 ```
 
 ```RRNPP_detector``` comes by default with the binary of ```SignalP version 5.0b Linux x86_64```. However, if you want to use another version of SignalP, the software is freely available for academic users at: https://services.healthtech.dtu.dk/software.php
@@ -188,11 +189,15 @@ If you have suggestions to improve the tool or would like to report bugs, please
 ## 7. Historic of versions
 
 ### v1.1.0
+* Receptor detection:
+  - A filter of >65% coverage of the query HMM has been introduced to minimize false positives
+  - The additional Com_TPR (PF18710) HMM has been included within the library of HMMs of TPRs
+
 * RAM Usage:
   - the ```--chunk_size``` option has been introduced, which enables to divide the target dataset into chunks of N genomes in an effort to preserve RAM usage. 
 
 * Search options:
-  - the ```--rbs_bins``` and ```start_codons``` options have been introduced, which enable to explictily specify the RBS motifs and start codons to consider for the detection of small ORFs encoded in the vicinity of candidate receptors 
+  - the ```--rbs_bins``` and ```start_codons``` options have been introduced, which enable to explictily specify the RBS motifs and start codons to consider for the detection of small ORFs encoded in the vicinity of candidate receptors
 
 
 ### v1.0.0
