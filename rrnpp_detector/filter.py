@@ -118,7 +118,7 @@ def subset_by_id(in_faa, subset_faa, protein_ids, junk_faa = None):
                     elif protein_id != '' and junk_faa:
                         junk_file.write(header)
                         junk_file.write(sequence)
-                    header = line
+                    header = line.strip()
                     protein_id = header[1:].split(' ', 1)[0]
                     sequence = '' 
                 else:
