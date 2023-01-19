@@ -221,7 +221,7 @@ def sprat(orf_counter, fna, out_faa, anchor_proteins, annotated_peptides, parame
                                                                                min_orf_len, max_orf_len, parameters['orfipy_start_codons'], rbs_regex, is_bin_allowed, 
                                                                                orf_counter, pair_id, anchor_protein, outfile, non_annotated_peptides,
                                                                                pair_dict, cognate_dict, coord_to_anno_pep, protein_dict)
-                    genomic_accession = line[1:].split(' ', 1)[0]
+                    genomic_accession = line[1:].strip().split(' ', 1)[0]
                     dna_sequence = ''
                 else:
                     dna_sequence += line.strip()
