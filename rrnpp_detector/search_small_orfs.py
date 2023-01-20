@@ -148,7 +148,7 @@ def translate(input_fna, output_faa, writing_mode):
         with open(input_fna, mode='r') as infile:
             for line in infile:
                 if line[0] == ">":
-                    outfile.write(line)
+                    outfile.write(line + '\n')
                 else:
                     protein = ''
                     cds = line.strip()
