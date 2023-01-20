@@ -113,10 +113,10 @@ def subset_by_id(in_faa, subset_faa, protein_ids, junk_faa = None):
                         k += 1
                         if k == n and not junk_faa:
                             break
-                        subset_file.write(header)
+                        subset_file.write(header + '\n')
                         subset_file.write(sequence)
                     elif protein_id != '' and junk_faa:
-                        junk_file.write(header)
+                        junk_file.write(header + '\n')
                         junk_file.write(sequence)
                     header = line.strip()
                     protein_id = header[1:].split(' ', 1)[0]
@@ -126,11 +126,11 @@ def subset_by_id(in_faa, subset_faa, protein_ids, junk_faa = None):
         infile.close()
         # handle last sequence of the input faa
         if protein_id in ids:
-            subset_file.write(header)
+            subset_file.write(header + '\n')
             subset_file.write(sequence)
             k += 1
         elif junk_faa:
-            junk_file.write(header)
+            junk_file.write(header + '\n')
             junk_file.write(sequence)
     subset_file.close()
     if junk_faa:
