@@ -157,8 +157,8 @@ def gff_to_dict(gff):
                         'end', 'score', 'strand', 'phase', 'attributes']
     useful_column_names = ['genomic_accession', 'type', 'start', 
                            'end', 'strand', 'attributes']
-    column_types = {'genomic_accession': str, 'type': str, 'start': int, 
-                    'end': int, 'strand': str, 'attributes': str}
+    column_types = {'genomic_accession': str, 'type': str, 'start': float, 
+                    'end': float, 'strand': str, 'attributes': str}
             
     try:
         df = pandas.read_csv(gff, sep='\t', skip_blank_lines=True, skiprows=commented_lines, header=None, names=gff_column_names, usecols=useful_column_names, dtype=column_types)

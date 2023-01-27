@@ -35,7 +35,7 @@ def load_parameters(args):
     # parameters['allowed_rbs_bins'] = [27, 24, 23, 22, 20, 19, 16, 15, 14, 13, 12, 6]
     parameters['allowed_rbs_bins'] = args.rbs_bins
     parameters['most_used_rbs_bins'] = [27, 24, 23, 22, 20, 19, 16, 15, 14, 13, 12, 6] # defined according to Omotajo et al.
-    parameters['strict_contexts'] = ['(====> =>)', '(<= <====)', '(<= ====>)', '(<==== =>)', '(<==== <=)', '(=> ====>)', '(====> <=)', '(=> <====)']
+    #parameters['strict_contexts'] = ['(====> =>)', '(<= <====)', '(<= ====>)', '(<==== =>)', '(<==== <=)', '(=> ====>)', '(====> <=)', '(=> <====)']
     parameters['strict_predictors'] = ['SP(Sec/SPI)', 'SHP_propeptide']
     parameters['relaxed_predictors'] = ['SP(Sec/SPI)', 'SHP_propeptide', 'LIPO(Sec/SPII)', 'TAT(Tat/SPI)', 'PrediSi_pos', 'PrediSi_neg_(but_high_score)']
     return parameters

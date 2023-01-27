@@ -11,7 +11,6 @@ import os
 #from rrnpp_detector.integrate_annotations import orfipy_bed_to_dict
 import orfipy_core
 from rrnpp_detector.preprocessing import load_rbs_regex, load_translation_table
-import re
 
 
 def make_coordinates_to_annotated_peptides_dict(peptides, protein_dict):
@@ -39,17 +38,17 @@ def define_flanking_regions(anchor_proteins, protein_dict, position_dict, parame
         # if flanking annotated gene too far away from receptor, then max_intergen_dist is used to set the boundary
         if (genomic_accession, position-1) in position_dict:
             annoprot_before = position_dict[(genomic_accession, position-1)]['protein_id']
-            flanking_dict[genomic_accession][anchor_protein]['before_start'] = max((protein_dict[annoprot_before]['end'] - 20), (protein_dict[anchor_protein]['start'] - max_intergen_dist - max_small_orf_len))
+            flanking_dict[genomic_accession][anchor_protein]['before_start'] = max((int(protein_dict[annoprot_before]['end']) - 20), (int(protein_dict[anchor_protein]['start']) - max_intergen_dist - max_small_orf_len))
         else:
-            flanking_dict[genomic_accession][anchor_protein]['before_start'] = protein_dict[anchor_protein]['start'] - max_intergen_dist - max_small_orf_len
-        flanking_dict[genomic_accession][anchor_protein]['before_end'] = protein_dict[anchor_protein]['start'] - (min_intergen_dist + 1)
+            flanking_dict[genomic_accession][anchor_protein]['before_start'] = int(protein_dict[anchor_protein]['start']) - max_intergen_dist - max_small_orf_len
+        flanking_dict[genomic_accession][anchor_protein]['before_end'] = int(protein_dict[anchor_protein]['start']) - (min_intergen_dist + 1)
         
-        flanking_dict[genomic_accession][anchor_protein]['after_start'] = protein_dict[anchor_protein]['end'] + min_intergen_dist + 1
+        flanking_dict[genomic_accession][anchor_protein]['after_start'] = int(protein_dict[anchor_protein]['end']) + min_intergen_dist + 1
         if (genomic_accession, position+1) in position_dict:
             annoprot_after = position_dict[(genomic_accession, position+1)]['protein_id']
-            flanking_dict[genomic_accession][anchor_protein]['after_end'] = min((protein_dict[annoprot_after]['start'] + 20), (protein_dict[anchor_protein]['end'] + max_intergen_dist + max_small_orf_len))
+            flanking_dict[genomic_accession][anchor_protein]['after_end'] = min((int(protein_dict[annoprot_after]['start']) + 20), (int(protein_dict[anchor_protein]['end']) + max_intergen_dist + max_small_orf_len))
         else:
-            flanking_dict[genomic_accession][anchor_protein]['after_end'] = protein_dict[anchor_protein]['end'] + max_intergen_dist + max_small_orf_len
+            flanking_dict[genomic_accession][anchor_protein]['after_end'] = int(protein_dict[anchor_protein]['end']) + max_intergen_dist + max_small_orf_len
     return flanking_dict
 
 
@@ -148,7 +147,7 @@ def translate(input_fna, output_faa, writing_mode):
         with open(input_fna, mode='r') as infile:
             for line in infile:
                 if line[0] == ">":
-                    outfile.write(line + '\n')
+                    outfile.write(line)
                 else:
                     protein = ''
                     cds = line.strip()
