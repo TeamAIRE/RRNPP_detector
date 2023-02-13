@@ -16,7 +16,7 @@ from rrnpp_detector.preprocessing import load_rbs_regex, load_translation_table
 def make_coordinates_to_annotated_peptides_dict(peptides, protein_dict):
     coordinates_to_annotated_peptides = dict()
     for p in peptides:
-        genomic_key = protein_dict[p]['genomic_accession'] + '_' + protein_dict[p]['strand'] + '_' + str(protein_dict[p]['start']) + '_' + str(protein_dict[p]['end'])
+        genomic_key = protein_dict[p]['genomic_accession'] + '_' + protein_dict[p]['strand'] + '_' + str(int(protein_dict[p]['start'])) + '_' + str(int(protein_dict[p]['end']))
         coordinates_to_annotated_peptides[genomic_key] = p
         protein_dict[p]['RBS_bin'] = protein_dict[p]['RBS_spacer'] = protein_dict[p]['RBS_motif'] = None
     return coordinates_to_annotated_peptides
@@ -104,6 +104,7 @@ def get_orfs(genomic_accession, strand, region_start, region_end, region_seq,
             real_end = stop + region_start - 1 + 3 # (+3 for stop codon)
             
         genomic_key = genomic_accession + '_' + strand + '_' + str(real_start) + '_' + str(real_end)
+        # print(genomic_key)
         # if detected small orf already is annotated, don't print it in fasta
         # Store nonetheless the RBS values in protein dict
         if genomic_key in coord_to_anno_pep:

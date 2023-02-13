@@ -39,10 +39,10 @@ def main():
     parser.add_argument('--min_rl',  dest='min_receptor_len',   default='250', help='minimal receptor length (default=250)')
     parser.add_argument('--max_rl',  dest='max_receptor_len',   default='500', help='maximal receptor length (default=500)')
     parser.add_argument('--min_igd', dest='min_intergen_dist',  default='-60', help='minimal intergenic distance (default=-60)')
-    parser.add_argument('--max_igd', dest='max_intergen_dist',  default='400', help='maximal intergenic distance (default=400)')
+    parser.add_argument('--max_igd', dest='max_intergen_dist',  default='450', help='maximal intergenic distance (default=400)')
     parser.add_argument('--start_codons', dest='start_codons', default='ATG', help='comma-separated list of start codons to consider for ORF calling (default=ATG)')
-    parser.add_argument('--rbs_bins', dest='rbs_bins', default='27,24,23,22,20,19,16,15,14,13,12,6', help='comma-separated list of Prodigal\'s RBS bins to consider for ORF calling '
-                        '(default=27,24,23,22,20,19,16,15,14,13,12,6), '
+    parser.add_argument('--rbs_bins', dest='rbs_bins', default='27,24,23,22,20,19,16,15,14', help='comma-separated list of Prodigal\'s RBS bins to consider for ORF calling '
+                        '(default=27,24,23,22,20,19,16,15,14), '
                         'to by bypass the filter, use --rbs_bins 27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0')
     parser.add_argument('--expand_to_homologs', action='store_true', help='use detected systems as seeds to detect putative homologous systems missed by RRNPP_detector')
     parser.add_argument('--tprpred', dest='tprpred', action='store_true', help='run tprpred in addition to hmmsearch for TPR motifs detection')

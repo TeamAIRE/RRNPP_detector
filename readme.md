@@ -7,7 +7,7 @@
 ```RRNPP_detector``` defines candidate RRNPP-type quorum sensing systems as tandems of adjacent ORFs encoding a candidate receptor (250-500aa protein matching HMMs of peptide-binding tetraticopeptide repeats (TPRs)) and a candidate pro-peptide (10-100aa protein predicted to be excreted via the SEC-translocon or matching the amino-acid profile of SHPs) 
 
 ```RRNPP_detector``` outputs candidate RRNPP-type systems with 3 different detection strictness:  
-* ```strict```: All receptor-propeptide pairs with an annotated propeptide or a propeptide preceded by a RBS_bin > 13 that either matches the HMM profile of SHPs or is predicted to undergo a SEC/SPI-dependent secretion according to ```SignalP```
+* ```strict```: All receptor-propeptide pairs oriented in a divergent or co-directional context with the propeptide downstream from the receptor, preceded by a RBS_bin > 13 and matching the HMM profile of SHPs or predicted to undergo a SEC/SPI-dependent secretion according to ```SignalP```
 * ```relaxed```: All remaining receptor-propeptide pairs in which the propeptide harbors any of the SP(Sec/SPI), TAT(Tat/SPI) or LIPO(Sec/SPII) signal sequence according to ```PrediSi``` or ```SignalP```    
 * ```loose```: All remaining receptor-propeptide pairs in which the propeptide is preceded by a RBS motif with both a high score (according to ```Prodigal```) and a high usage across prokaryotes (according to Omotajo et al.)
 
@@ -201,7 +201,6 @@ If you have suggestions to improve the tool or would like to report bugs, please
 
 * Strictness levels:
   - QSSs with an unannotated propeptide preceded by a RBS_bin <= 13 are no longer included in the 'strict' output
-  - Filtering based on the genomic context has been disabled 
 
 
 ### v1.0.0

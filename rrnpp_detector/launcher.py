@@ -502,7 +502,7 @@ def launcher(args, parameters, rrnpp_detector_dir, current_dir, out_dir, working
         # - SHP according to hmmsearch or 
         # - SP(Sec/SPI) according to Signalp
         ###########################################################################################
-        tmp_strict_df = tmp_df[(tmp_df['Prediction'].isin(parameters['strict_predictors']))]
+        tmp_strict_df =  tmp_df[(tmp_df['Prediction'].isin(parameters['strict_predictors'])) & (tmp_df['genomic_context'].isin(parameters['strict_contexts']))]
         strict_df_a = tmp_strict_df.loc[tmp_strict_df.propeptide_id.str[0:8] != "smallORF"]
         strict_df_b = tmp_strict_df.loc[tmp_strict_df['p_RBS_bin'] > 13]
         strict_df = pandas.concat([strict_df_a, strict_df_b])
