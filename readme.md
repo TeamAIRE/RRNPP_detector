@@ -186,7 +186,21 @@ python rrnpp_detector.py --fna "$DOWNLOAD_DIRECTORY"/viral_genomes.fna --faa "$D
 
 If you have suggestions to improve the tool or would like to report bugs, please post your message on the Issues section of this repository.
 
-## 7. Historic of versions
+## 7. Citation.
+
+If you are using RRNPP_detector, please cite the following paper:
+
+* Bernard C, Li Y, Lopez P, Bapteste E: Large-scale identification of known and novel RRNPP quorum sensing systems by RRNPP_detector captures novel features of bacterial, plasmidic and viral co-evolution. Molecular Biology and Evolution. 2023. doi: 10.1093/molbev/msad062
+
+We strongly encourage you to cite the following 3rd party dependencies:
+
+* Almagro Armenteros JJ, Tsirigos KD, Sønderby CK, Petersen TN, Winther O, Brunak S, von Heijne G, Nielsen H. 2019. Signalp 5.0 improves signal peptide predictions using deep neural networks. Nat Biotechnol. 37:420–423.
+* Eddy SR. 2011. Accelerated profile HMM searches. PLoS Comput Biol. 7:e1002195.
+* Hyatt D, Chen GL, LoCascio PF, Land ML, Larimer FW, Hauser LJ. 2010. Prodigal: prokaryotic gene recognition and translation initiation site identification. BMC Bioinform. 11:119.
+* Singh U, Wurtele ES. 2021. Orfipy: a fast and flexible tool for extracting ORFs. Bioinformatics 37:3019–3020.
+
+
+## 8. Historic of versions
 
 ### v1.1.0
 * Receptor detection:
